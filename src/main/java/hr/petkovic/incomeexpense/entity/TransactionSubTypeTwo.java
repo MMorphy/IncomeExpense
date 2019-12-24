@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "trans_subtypes_2")
-public class TransactionSubTypeTwo {
+public class TransactionSubtypeTwo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +18,13 @@ public class TransactionSubTypeTwo {
 	@Column(nullable = false)
 	private String name;
 
-	public TransactionSubTypeTwo(Long id, String name) {
+	public TransactionSubtypeTwo(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
 	}
 
-	public TransactionSubTypeTwo() {
+	public TransactionSubtypeTwo() {
 	}
 
 	public Long getId() {

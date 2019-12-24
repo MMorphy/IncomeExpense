@@ -27,9 +27,9 @@ public class TransactionSubtypeOne {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "transaction_subtype_one_id")
 	@Column(nullable = true)
-	private Collection<TransactionSubTypeTwo> subtypesTwo;
+	private Collection<TransactionSubtypeTwo> subtypesTwo;
 
-	public TransactionSubtypeOne(Long id, String name, Collection<TransactionSubTypeTwo> subtypesTwo) {
+	public TransactionSubtypeOne(Long id, String name, Collection<TransactionSubtypeTwo> subtypesTwo) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -37,7 +37,7 @@ public class TransactionSubtypeOne {
 	}
 
 	public TransactionSubtypeOne() {
-		this.subtypesTwo = new ArrayList<TransactionSubTypeTwo>();
+		this.subtypesTwo = new ArrayList<TransactionSubtypeTwo>();
 	}
 
 	public Long getId() {
@@ -56,11 +56,11 @@ public class TransactionSubtypeOne {
 		this.name = name;
 	}
 
-	public Collection<TransactionSubTypeTwo> getSubtypesTwo() {
+	public Collection<TransactionSubtypeTwo> getSubtypesTwo() {
 		return subtypesTwo;
 	}
 
-	public void setSubtypesTwo(Collection<TransactionSubTypeTwo> subtypesTwo) {
+	public void setSubtypesTwo(Collection<TransactionSubtypeTwo> subtypesTwo) {
 		this.subtypesTwo = subtypesTwo;
 	}
 
