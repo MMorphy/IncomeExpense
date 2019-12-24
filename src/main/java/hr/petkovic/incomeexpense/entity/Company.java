@@ -1,5 +1,6 @@
 package hr.petkovic.incomeexpense.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
@@ -37,4 +38,59 @@ public class Company {
 	@Fetch(value = FetchMode.SUBSELECT)
 	@JoinColumn(name = "company_id")
 	private Collection<FinancialTransaction> transactions;
+
+	public Company(Long id, String name, String location, Float currentCash,
+			Collection<FinancialTransaction> transactions) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.location = location;
+		this.currentCash = currentCash;
+		this.transactions = transactions;
+	}
+
+	public Company() {
+		this.transactions = new ArrayList<FinancialTransaction>();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public Float getCurrentCash() {
+		return currentCash;
+	}
+
+	public void setCurrentCash(Float currentCash) {
+		this.currentCash = currentCash;
+	}
+
+	public Collection<FinancialTransaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(Collection<FinancialTransaction> transactions) {
+		this.transactions = transactions;
+	}
+
 }

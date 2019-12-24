@@ -32,14 +32,77 @@ public class FinancialTransaction {
 	@Column(nullable = false)
 	private Float amount;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinColumn(name = "currency_id")
 	private Currency currency;
 
 	@Column(nullable = true)
 	private String description;
-	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinColumn(name = "transaction_type_id")
 	private TransactionType type;
+
+	public FinancialTransaction(Long id, Date createDate, Float amount, Currency currency, String description,
+			TransactionType type) {
+		super();
+		this.id = id;
+		this.createDate = createDate;
+		this.amount = amount;
+		this.currency = currency;
+		this.description = description;
+		this.type = type;
+	}
+
+	public FinancialTransaction() {
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public Float getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Float amount) {
+		this.amount = amount;
+	}
+
+	public Currency getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(Currency currency) {
+		this.currency = currency;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public TransactionType getType() {
+		return type;
+	}
+
+	public void setType(TransactionType type) {
+		this.type = type;
+	}
+
 }

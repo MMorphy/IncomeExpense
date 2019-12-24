@@ -31,10 +31,63 @@ public class Plan {
 	@Column(nullable = false)
 	private Date toDate;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinColumn(name = "transaction_type_id")
 	private TransactionType type;
 
 	@Column(nullable = false)
 	private Float amount;
+
+	public Plan(Long id, Date fromDate, Date toDate, TransactionType type, Float amount) {
+		super();
+		this.id = id;
+		this.fromDate = fromDate;
+		this.toDate = toDate;
+		this.type = type;
+		this.amount = amount;
+	}
+
+	public Plan() {
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Date getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public Date getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
+	}
+
+	public TransactionType getType() {
+		return type;
+	}
+
+	public void setType(TransactionType type) {
+		this.type = type;
+	}
+
+	public Float getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Float amount) {
+		this.amount = amount;
+	}
+
 }
