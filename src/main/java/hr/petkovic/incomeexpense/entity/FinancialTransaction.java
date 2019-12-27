@@ -43,8 +43,12 @@ public class FinancialTransaction {
 	@JoinColumn(name = "transaction_type_id")
 	private TransactionType type;
 
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@JoinColumn(name = "user_id")
+	private User createdBy;
+
 	public FinancialTransaction(Long id, Date createDate, Float amount, Currency currency, String description,
-			TransactionType type) {
+			TransactionType type, User createdBy) {
 		super();
 		this.id = id;
 		this.createDate = createDate;
@@ -52,6 +56,7 @@ public class FinancialTransaction {
 		this.currency = currency;
 		this.description = description;
 		this.type = type;
+		this.createdBy = createdBy;
 	}
 
 	public FinancialTransaction() {
@@ -103,6 +108,14 @@ public class FinancialTransaction {
 
 	public void setType(TransactionType type) {
 		this.type = type;
+	}
+
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
 	}
 
 }
