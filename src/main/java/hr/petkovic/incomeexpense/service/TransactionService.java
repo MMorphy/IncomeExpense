@@ -8,9 +8,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hr.petkovic.incomeexpense.entity.Contract;
 import hr.petkovic.incomeexpense.entity.FinancialTransaction;
 import hr.petkovic.incomeexpense.entity.TransactionType;
 import hr.petkovic.incomeexpense.repository.CompanyRepository;
+import hr.petkovic.incomeexpense.repository.ContractRepository;
 import hr.petkovic.incomeexpense.repository.FinancialTransactionRepository;
 import hr.petkovic.incomeexpense.repository.TransactionTypeRepository;
 
@@ -26,11 +28,23 @@ public class TransactionService {
 	@Autowired
 	private TransactionTypeRepository typeRepo;
 
+	@Autowired
+	private ContractRepository contractRepo;
+
 	public TransactionService(FinancialTransactionRepository transRepo, CompanyRepository companyRepo,
-			TransactionTypeRepository typeRepo) {
+			TransactionTypeRepository typeRepo, ContractRepository contractRepo) {
 		this.transRepo = transRepo;
 		this.companyRepo = companyRepo;
 		this.typeRepo = typeRepo;
+		this.contractRepo = contractRepo;
+	}
+
+	public FinancialTransaction findTransactionById(Long id) {
+		Optional<FinancialTransaction> optTrans = transRepo.findById(id);
+		if (optTrans.isPresent()) {
+			return optTrans.get();
+		} else
+			return null;
 	}
 
 	public List<FinancialTransaction> findTransactionsByCompanyName(String name) {
@@ -73,5 +87,13 @@ public class TransactionService {
 		} else {
 			return transRepo.save(transaction);
 		}
+	}
+
+	public List<Contract> findAllContracts() {
+		return contractRepo.findAll();
+	}
+
+	public void deleteTransactionById(Long id) {
+		this.transRepo.deleteById(id);
 	}
 }

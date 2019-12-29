@@ -9,4 +9,6 @@ import hr.petkovic.incomeexpense.entity.Company;
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 
 	Optional<Company> findByName(String name);
+
+	Optional<Company> findByTransactions_Id(Long id);
 }

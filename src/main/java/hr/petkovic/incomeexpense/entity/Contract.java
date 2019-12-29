@@ -2,6 +2,7 @@ package hr.petkovic.incomeexpense.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,7 +34,7 @@ public class Contract {
 	@JoinColumn(name = "currency_id")
 	private Currency agreedCurrency;
 
-	private Float currentAmount;
+	private Float currentAmount = new Float(0F);
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "contract_id")
@@ -102,4 +103,31 @@ public class Contract {
 		this.transactions = transactions;
 	}
 
+	public boolean addTransaction(FinancialTransaction transaction) {
+		try {
+			this.transactions.add(transaction);
+			if (transaction.getType().getName().equals("Income")) {
+				this.currentAmount += transaction.getAmount();
+			} else if (transaction.getType().getName().equals("Expenses")) {
+				this.currentAmount -= transaction.getAmount();
+			}
+			return true;
+		} catch (Exception ex) {
+			return false;
+		}
+	}
+
+	public boolean removeTransaction(FinancialTransaction transaction) {
+		try {
+			this.transactions.remove(transaction);
+			if (transaction.getType().getName().equals("Income")) {
+				this.currentAmount -= transaction.getAmount();
+			} else if (transaction.getType().getName().equals("Expenses")) {
+				this.currentAmount += transaction.getAmount();
+			}
+		} catch (Exception ex) {
+			return false;
+		}
+		return true;
+	}
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -36,8 +36,8 @@
 						<th>Subtype 1</th>
 						<th>Subtype 2</th>
 						<th>Description</th>
-<!-- 						<th>Remove</th> -->
-<!-- 						<th>Edit</th> -->
+						<th>Remove</th>
+						<!-- 						<th>Edit</th> -->
 					</tr>
 				</thead>
 				<tbody>
@@ -51,22 +51,22 @@
 						<td th:text="${trans.type.subtypeOne}"></td>
 						<td th:text="${trans.type.subtypeTwo}"></td>
 						<td th:text="${trans.description}"></td>
-<!-- 						<td> -->
-<!-- 							<form th:action="@{'/user/delete/' + ${user.id}}" method="post"> -->
-<!-- 								<button>Remove</button> -->
-<!-- 							</form> -->
-<!-- 						</td> -->
-<!-- 						<td> -->
-<!-- 							<form th:action="@{'/user/edit/' + ${user.id}}" method="get"> -->
-<!-- 								<button>Edit</button> -->
-<!-- 							</form> -->
-<!-- 						</td> -->
+						<td>
+							<form th:action="@{'/trans/delete/' + ${trans.id}}" method="post">
+								<button>Remove</button>
+							</form>
+						</td>
+						<!-- 						<td> -->
+						<!-- 							<form th:action="@{'/user/edit/' + ${user.id}}" method="get"> -->
+						<!-- 								<button>Edit</button> -->
+						<!-- 							</form> -->
+						<!-- 						</td> -->
 					</tr>
 				</tbody>
 			</table>
 
 		</div>
-		<form th:action="@{/trans/add/}" method="get">
+		<form th:action="@{/trans/add}" method="get">
 			<button>Add new transaction</button>
 		</form>
 	</div>

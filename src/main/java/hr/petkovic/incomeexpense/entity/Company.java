@@ -93,4 +93,24 @@ public class Company {
 		this.transactions = transactions;
 	}
 
+	public boolean addTransaction(FinancialTransaction trans) {
+		this.transactions.add(trans);
+		if (trans.getType().getName().equals("Income")) {
+			this.currentCash += trans.getAmount();
+		} else if (trans.getType().getName().equals("Expenses")) {
+			this.currentCash -= trans.getAmount();
+		}
+		return true;
+	}
+
+	public boolean removeTransaction(FinancialTransaction trans) {
+		this.transactions.remove(trans);
+		if (trans.getType().getName().equals("Income")) {
+			this.currentCash -= trans.getAmount();
+		} else if (trans.getType().getName().equals("Expenses")) {
+			this.currentCash += trans.getAmount();
+		}
+		return true;
+	}
+
 }
