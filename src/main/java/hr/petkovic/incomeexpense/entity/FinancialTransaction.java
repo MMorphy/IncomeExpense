@@ -14,8 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.metadata.ValidateUnwrappedValue;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "financial_transactions")
@@ -33,17 +36,20 @@ public class FinancialTransaction {
 	private Float amount;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@Fetch(value = FetchMode.JOIN)
 	@JoinColumn(name = "currency_id")
 	private Currency currency;
 
 	@Column(nullable = true)
-	private String description;
+	private String description = "";
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@Fetch(value = FetchMode.JOIN)
 	@JoinColumn(name = "transaction_type_id")
 	private TransactionType type;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@Fetch(value = FetchMode.JOIN)
 	@JoinColumn(name = "user_id")
 	private User createdBy;
 

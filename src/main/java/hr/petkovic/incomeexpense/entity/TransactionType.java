@@ -1,16 +1,10 @@
 package hr.petkovic.incomeexpense.entity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,20 +18,21 @@ public class TransactionType {
 	@Column(nullable = false)
 	private String name;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "transaction_type_id")
 	@Column(nullable = false)
-	private Collection<TransactionSubtypeOne> subtypesOne;
+	private String subtypeOne;
 
-	public TransactionType(Long id, String name, Collection<TransactionSubtypeOne> subtypesOne) {
+	@Column(nullable = true)
+	private String subtypeTwo;
+
+	public TransactionType(Long id, String name, String subtypeOne, String subtypeTwo) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.subtypesOne = subtypesOne;
+		this.subtypeOne = subtypeOne;
+		this.subtypeTwo = subtypeTwo;
 	}
 
 	public TransactionType() {
-		this.subtypesOne = new ArrayList<TransactionSubtypeOne>();
 	}
 
 	public Long getId() {
@@ -56,12 +51,20 @@ public class TransactionType {
 		this.name = name;
 	}
 
-	public Collection<TransactionSubtypeOne> getSubtypesOne() {
-		return subtypesOne;
+	public String getSubtypeOne() {
+		return subtypeOne;
 	}
 
-	public void setSubtypesOne(Collection<TransactionSubtypeOne> subtypesOne) {
-		this.subtypesOne = subtypesOne;
+	public void setSubtypeOne(String subtypeOne) {
+		this.subtypeOne = subtypeOne;
+	}
+
+	public String getSubtypeTwo() {
+		return subtypeTwo;
+	}
+
+	public void setSubtypeTwo(String subtypeTwo) {
+		this.subtypeTwo = subtypeTwo;
 	}
 
 }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</head>
+<body>
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+	
+	<form method="POST" th:object="${addTrans}"
+		th:action="@{/trans/add/}">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="form-group col-lg-4">
+					<label>Amount:</label> <select th:field="*{carGroup}"
+						class="form-control" required="required">
+						<option th:each="group : ${carGroups}" th:value="${group.id}"
+							th:text="${group.carGroup}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-lg-3">
+					<label for="checkOutTime">From:</label> <input
+						type="datetime-local" class="form-control" id="checkOutTime"
+						th:field="*{checkOutTime}" required="required">
+				</div>
+
+				<div class="form-group col-lg-3">
+					<label>Check-out office:</label> <select
+						th:field="*{checkOutOffice}" class="form-control"
+						required="required">
+						<option th:each="office : ${offices}" th:value="${office.id}"
+							th:text="${office.name}"></option>
+					</select>
+				</div>
+
+				<div class="form-group col-lg-3">
+					<label for="checkInTime">TO:</label> <input type="datetime-local"
+						class="form-control" id="checkInTime" th:field="*{checkInTime}"
+						required="required">
+				</div>
+
+				<div class="form-group col-lg-3">
+					<label>Check-in office:</label> <select th:field="*{checkInOffice}"
+						class="form-control" required="required">
+						<option th:each="office : ${offices}" th:value="${office.id}"
+							th:text="${office.name}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-lg-4">
+
+					<input type="submit" th:value="Submit" name="action"> <input
+						type="submit" th:value="Cancel" name="action">
+				</div>
+			</div>
+		</div>
+	</form>
+	
+	
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</th:block>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>
+</head>
+<body>
+	   
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<script>
+		$(document).ready(function() {
+			$('#transTable').DataTable();
+		});
+	</script>
+
+	<div class="col-md-12">
+		<div class="col-md-12">
+			<h1 class="col-md-3">Transactions</h1>
+		</div>
+		<div class="col-md-12">
+			<table class="table" id="transTable">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Created at</th>
+						<th>User</th>
+						<th>Amount</th>
+						<th>Currency</th>
+						<th>Type</th>
+						<th>Subtype 1</th>
+						<th>Subtype 2</th>
+						<th>Description</th>
+<!-- 						<th>Remove</th> -->
+<!-- 						<th>Edit</th> -->
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="trans : ${transactions}">
+						<td th:text="${trans.id}"></td>
+						<td th:text="${trans.createDate}"></td>
+						<td th:text="${trans.createdBy.username}"></td>
+						<td th:text="${trans.amount}"></td>
+						<td th:text="${trans.currency.name}"></td>
+						<td th:text="${trans.type.name}"></td>
+						<td th:text="${trans.type.subtypeOne}"></td>
+						<td th:text="${trans.type.subtypeTwo}"></td>
+						<td th:text="${trans.description}"></td>
+<!-- 						<td> -->
+<!-- 							<form th:action="@{'/user/delete/' + ${user.id}}" method="post"> -->
+<!-- 								<button>Remove</button> -->
+<!-- 							</form> -->
+<!-- 						</td> -->
+<!-- 						<td> -->
+<!-- 							<form th:action="@{'/user/edit/' + ${user.id}}" method="get"> -->
+<!-- 								<button>Edit</button> -->
+<!-- 							</form> -->
+<!-- 						</td> -->
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+		<form th:action="@{/trans/add/}" method="get">
+			<button>Add new transaction</button>
+		</form>
+	</div>
+
+
+</body>
+</html>
