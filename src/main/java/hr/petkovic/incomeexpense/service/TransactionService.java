@@ -47,6 +47,10 @@ public class TransactionService {
 			return null;
 	}
 
+	public List<FinancialTransaction> findAllTransactions() {
+		return transRepo.findAll();
+	}
+
 	public List<FinancialTransaction> findTransactionsByCompanyName(String name) {
 		List<FinancialTransaction> list = new ArrayList<>();
 		try {

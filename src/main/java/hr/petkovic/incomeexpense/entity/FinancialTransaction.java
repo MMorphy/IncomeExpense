@@ -2,7 +2,6 @@ package hr.petkovic.incomeexpense.entity;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +33,7 @@ public class FinancialTransaction {
 	@Column(nullable = false)
 	private Float amount;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@ManyToOne(fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.JOIN)
 	@JoinColumn(name = "currency_id")
 	private Currency currency;
@@ -42,12 +41,12 @@ public class FinancialTransaction {
 	@Column(nullable = true)
 	private String description = "";
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@ManyToOne(fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.JOIN)
 	@JoinColumn(name = "transaction_type_id")
 	private TransactionType type;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@ManyToOne(fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.JOIN)
 	@JoinColumn(name = "user_id")
 	private User createdBy;

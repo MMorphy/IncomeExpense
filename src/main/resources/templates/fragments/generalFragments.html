@@ -26,22 +26,8 @@
 				<ul class="nav navbar-nav">
 					<li><a th:href="@{/}">Home</a></li>
 					<li><a th:href="@{'/trans/' + ${#authentication.getPrincipal().getUsername()}}">My Transactions</a></li>
-					<li class="dropdown" sec:authorize="hasRole('ROLE_OPER')"><a
-						class="dropdown-toggle" data-toggle="dropdown" href="#">Office
-							administration <span class="caret"></span>
-					</a>
-						<ul class="dropdown-menu">
-							<li><a th:href="@{/office/administration/}"> Office</a></li>
-							<li sec:authorize="hasRole('ROLE_ADMIN')"><a
-								th:href="@{/workingHours/administration/}"> Working hours</a></li>
-							<li sec:authorize="hasRole('ROLE_ADMIN')"><a
-								th:href="@{/user/administration}"> User Admin</a></li>
-						</ul></li>
-
-					<li class="dropdown" sec:authorize="hasRole('ROLE_OPER')"><a
-						class="dropdown-toggle" data-toggle="dropdown" href="#">Vehicle
-							administration <span class="caret"></span>
-					</a></li>
+					<li><a th:href="@{/trans/}">All Transactions</a></li>
+					
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li sec:authorize="!isAuthenticated()"><a

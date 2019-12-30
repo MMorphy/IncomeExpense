@@ -2,8 +2,6 @@ package hr.petkovic.incomeexpense.controller;
 
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -28,7 +26,7 @@ import hr.petkovic.incomeexpense.service.UserService;
 @RequestMapping("/trans")
 public class TransactionController {
 
-	private static Logger logger = LoggerFactory.getLogger(TransactionController.class);
+//	private static Logger logger = LoggerFactory.getLogger(TransactionController.class);
 
 	@Autowired
 	private TransactionService transService;
@@ -48,6 +46,12 @@ public class TransactionController {
 		this.currencyService = currencyService;
 		this.userService = userService;
 		this.contractService = contractService;
+	}
+
+	@GetMapping()
+	public String getAllTransactions(Model model) {
+		model.addAttribute("transactions", transService.findAllTransactions());
+		return "transactions/transactions";
 	}
 
 	@GetMapping("{username}")
@@ -73,8 +77,6 @@ public class TransactionController {
 		FinancialTransaction trans = addTrans.getTrans();
 		trans.setCreateDate(new Date());
 		trans.setCreatedBy(currentUser);
-		transService.saveTransaction(trans);
-
 		Company comp = addTrans.getCompany();
 		comp.addTransaction(trans);
 		companyService.saveCompany(comp);
@@ -85,6 +87,58 @@ public class TransactionController {
 		}
 
 		return "redirect:/";
+	}
+
+	@GetMapping("/edit/{id}")
+	public String getTransactionEdit(@PathVariable("id") Long id, Model model) {
+		FinancialTransaction trans = transService.findTransactionById(id);
+		FinancialTransactionDTO editTrans = new FinancialTransactionDTO();
+
+		editTrans.setTrans(trans);
+		editTrans.setCompany(companyService.findCompanyByTransaction(trans));
+		editTrans.setContract(contractService.findContractByTransaction(trans));
+
+		model.addAttribute("editTrans", editTrans);
+		model.addAttribute("companies", companyService.findAllCompanies());
+		model.addAttribute("currencies", currencyService.findAllCurrencies());
+		model.addAttribute("types", transService.findAllTransactionTypes());
+		model.addAttribute("contracts", transService.findAllContracts());
+		return "transactions/transactionsEdit";
+	}
+
+	@PostMapping("/edit/{id}")
+	public String transactionEdit(@PathVariable("id") Long id, Model model, FinancialTransactionDTO editTrans) {
+		FinancialTransaction oldTrans = transService.findTransactionById(id);
+		boolean needToDelete = false;
+
+		Company newCompany = editTrans.getCompany();
+		Company oldCompany = companyService.findCompanyByTransaction(oldTrans);
+		if (!oldCompany.equals(newCompany) || !oldCompany.getId().equals(newCompany.getId())) {
+			oldCompany.removeTransaction(oldTrans);
+			companyService.saveCompany(oldCompany);
+
+			editTrans.getTrans().setCreatedBy(oldTrans.getCreatedBy());
+			newCompany.addTransaction(editTrans.getTrans());
+			companyService.saveCompany(newCompany);
+			needToDelete = true;
+		}
+		Contract newContract = editTrans.getContract();
+		Contract oldContract = contractService.findContractByTransaction(oldTrans);
+		if (!oldContract.equals(newContract) || !oldContract.getId().equals(newContract.getId())) {
+			oldContract.removeTransaction(oldTrans);
+			contractService.saveContract(oldContract);
+
+			editTrans.getTrans().setCreatedBy(oldTrans.getCreatedBy());
+			newContract.addTransaction(editTrans.getTrans());
+			contractService.saveContract(newContract);
+			needToDelete = true;
+		}
+		if (needToDelete) {
+			transService.deleteTransactionById(oldTrans.getId());
+		}
+		model.addAttribute("transactions",
+				transService.findTransactionsByUsername(oldTrans.getCreatedBy().getUsername()));
+		return "redirect:/trans/" + oldTrans.getCreatedBy().getUsername();
 	}
 
 	@PostMapping("/delete/{id}")
@@ -102,8 +156,7 @@ public class TransactionController {
 		}
 		transService.deleteTransactionById(id);
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		model.addAttribute("transactions", transService
-				.findTransactionsByUsername(username));
+		model.addAttribute("transactions", transService.findTransactionsByUsername(username));
 		return "redirect:/trans/" + username;
 	}
 }
