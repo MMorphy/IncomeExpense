@@ -110,7 +110,7 @@ public class TransactionController {
 	public String transactionEdit(@PathVariable("id") Long id, Model model, FinancialTransactionDTO editTrans) {
 		FinancialTransaction oldTrans = transService.findTransactionById(id);
 		boolean needToDelete = false;
-
+		//TODO Change save to update you dummy...
 		Company newCompany = editTrans.getCompany();
 		Company oldCompany = companyService.findCompanyByTransaction(oldTrans);
 		if (!oldCompany.equals(newCompany) || !oldCompany.getId().equals(newCompany.getId())) {

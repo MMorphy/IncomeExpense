@@ -15,49 +15,45 @@
 
 	<script>
 		$(document).ready(function() {
-			$('#transTable').DataTable();
+			$('#buyersTable').DataTable();
 		});
 	</script>
 
 	<div class="col-md-12">
 		<div class="col-md-12">
-			<h1 class="col-md-3">Transactions</h1>
+			<h1 class="col-md-3">Buyers</h1>
 		</div>
 		<div class="col-md-12">
-			<table class="table" id="transTable">
+			<table class="table" id="buyersTable">
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Created at</th>
-						<th>User</th>
-						<th>Amount</th>
-						<th>Currency</th>
-						<th>Type</th>
-						<th>Subtype 1</th>
-						<th>Subtype 2</th>
+						<th>Name</th>
+						<th>Code</th>
 						<th>Description</th>
+						<th>Contracts</th>
 						<th>Remove</th>
 						<th>Edit</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="trans : ${transactions}">
-						<td th:text="${trans.id}"></td>
-						<td th:text="${trans.createDate}"></td>
-						<td th:text="${trans.createdBy.username}"></td>
-						<td th:text="${trans.amount}"></td>
-						<td th:text="${trans.currency.name}"></td>
-						<td th:text="${trans.type.name}"></td>
-						<td th:text="${trans.type.subtypeOne}"></td>
-						<td th:text="${trans.type.subtypeTwo}"></td>
-						<td th:text="${trans.description}"></td>
+					<tr th:each="buyer : ${buyers}">
+						<td th:text="${buyer.id}"></td>
+						<td th:text="${buyer.name}"></td>
+						<td th:text="${buyer.code}"></td>
+						<td th:text="${buyer.description}"></td>
+						  <!-- TODO: Add contracts controller to get all contracts from a buyer by id -->
+						
+						<td><a
+							th:href="@{'/contracts/' + ${buyer.id}}">Contracts
+						</a></td>
 						<td>
-							<form th:action="@{'/trans/delete/' + ${trans.id}}" method="post">
+							<form th:action="@{'/buyer/delete/' + ${buyer.id}}" method="post">
 								<button>Remove</button>
 							</form>
 						</td>
 						<td>
-							<form th:action="@{'/trans/edit/' + ${trans.id}}" method="get">
+							<form th:action="@{'/buyer/edit/' + ${buyer.id}}" method="get">
 								<button>Edit</button>
 							</form>
 						</td>
@@ -66,8 +62,8 @@
 			</table>
 
 		</div>
-		<form th:action="@{/trans/add}" method="get">
-			<button>Add new transaction</button>
+		<form th:action="@{/buyer/add}" method="get">
+			<button>Add new buyer</button>
 		</form>
 	</div>
 

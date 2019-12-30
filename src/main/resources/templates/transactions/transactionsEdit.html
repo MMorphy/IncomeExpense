@@ -3,7 +3,7 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Transaction editing</title>
 <th:block th:include="fragments/generalFragments.html :: headerfiles">
 </head>
 <body>
@@ -56,8 +56,8 @@
 		</div>
 		<div class="row">
 			<div class="form-group col-lg-4">
-				<input type="submit" th:value="Submit" name="action"> <input
-					type="submit" th:value="Cancel" name="action">
+				<input type="submit" th:value="Submit" name="action"> 
+				<input type="button" onclick="history.go(-1);" value="Back">
 			</div>
 		</div>
 	</form>

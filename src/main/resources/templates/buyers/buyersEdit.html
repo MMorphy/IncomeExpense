@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Buyer editing</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</head>
+<body>
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<form method="POST" th:object="${editBuyer}" th:action="@{'/buyer/edit/' + *{id}}">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="form-group col-lg-3">
+					<label for="name" class="control-label">Name:</label>
+					<input type="text" class="form-control" id="name"
+						th:field="*{name}" required="required">
+				</div>
+				<div class="form-group col-lg-3">
+					<label for="code" class="control-label">Code:</label>
+					<input type="text" class="form-control" id="code"
+						th:field="*{code}" required="required">
+				</div>
+				<div class="form-group col-lg-6">
+					<label for="description" class="control-label">Description:</label>
+					<input type="text" class="form-control" id="description"
+						th:field="*{description}">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-lg-4">
+				<input type="submit" th:value="Submit" name="action"> <input
+					type="button" onclick="history.go(-1);" value="Back">
+			</div>
+		</div>
+	</form>
+
+
+</body>
+</html>

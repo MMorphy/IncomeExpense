@@ -27,15 +27,12 @@
 					<li><a th:href="@{/}">Home</a></li>
 					<li><a th:href="@{'/trans/' + ${#authentication.getPrincipal().getUsername()}}">My Transactions</a></li>
 					<li><a th:href="@{/trans/}">All Transactions</a></li>
+					<li><a th:href="@{/buyer/}">Buyers</a></li>
+					<li><a th:href="@{/trans/}">All Transactions</a></li>
+					<li><a th:href="@{/trans/}">All Transactions</a></li>
 					
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li sec:authorize="!isAuthenticated()"><a
-						th:href="@{/user/registration/}"><span
-							class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-					<li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">
-							<span class="glyphicon glyphicon-log-in"></span> Login
-					</a></li>
 					<li sec:authorize="isAuthenticated()"><a
 						href="javascript: document.logoutForm.submit()"> <span
 							class="glyphicon glyphicon-log-out"></span> Logout
