@@ -90,4 +90,21 @@ public class Buyer {
 		this.contracts = contracts;
 	}
 
+	public boolean addContract(Contract contract) {
+		try {
+			this.contracts.add(contract);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public boolean removeContract(Contract contract) {
+		try {
+			this.contracts.remove(contract);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 }

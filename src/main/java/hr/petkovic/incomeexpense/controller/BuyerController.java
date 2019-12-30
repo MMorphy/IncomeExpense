@@ -23,7 +23,7 @@ public class BuyerController {
 	}
 
 	@GetMapping()
-	public String getAllTransactions(Model model) {
+	public String getAllBuyers(Model model) {
 		model.addAttribute("buyers", buyerService.findAllBuyers());
 		return "buyers/buyers";
 	}
@@ -41,15 +41,15 @@ public class BuyerController {
 	}
 
 	@GetMapping("/edit/{id}")
-	public String getbuyerEditing(@PathVariable("id") Long id, Model model) {
+	public String getBuyerEditing(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("editBuyer", buyerService.findBuyerById(id));
 		return "buyers/buyersEdit";
 
 	}
 
 	@PostMapping("/edit/{id}")
-	public String editBuyer(@PathVariable("id") Long id, Buyer addBuyer, Model model) {
-		buyerService.updateBuyer(id, addBuyer);
+	public String editBuyer(@PathVariable("id") Long id, Buyer editBuyer, Model model) {
+		buyerService.updateBuyer(id, editBuyer);
 		model.addAttribute("buyers", buyerService.findAllBuyers());
 		return "redirect:/buyer";
 	}

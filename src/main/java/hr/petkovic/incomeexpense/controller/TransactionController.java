@@ -60,6 +60,11 @@ public class TransactionController {
 		return "transactions/transactions";
 	}
 
+	@GetMapping("/contracts/{id}")
+	public String getAllTransactionsFromContract(@PathVariable Long id, Model model) {
+		model.addAttribute("transactions", transService.findTransactionsByContractId(id));
+		return "transactions/transactions";
+	}
 	@GetMapping("/add")
 	public String getTransactionAdding(Model model) {
 		model.addAttribute("addTrans", new FinancialTransactionDTO());
@@ -110,7 +115,8 @@ public class TransactionController {
 	public String transactionEdit(@PathVariable("id") Long id, Model model, FinancialTransactionDTO editTrans) {
 		FinancialTransaction oldTrans = transService.findTransactionById(id);
 		boolean needToDelete = false;
-		//TODO Change save to update you dummy...
+		//TODO Change save to update you dummy... and update the transaction if there were no changes to contracts/companies
+		// See contract controller for better details
 		Company newCompany = editTrans.getCompany();
 		Company oldCompany = companyService.findCompanyByTransaction(oldTrans);
 		if (!oldCompany.equals(newCompany) || !oldCompany.getId().equals(newCompany.getId())) {

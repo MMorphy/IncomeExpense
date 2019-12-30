@@ -24,7 +24,7 @@
 						class="form-control" th:field="*{contract}">
 					<datalist id="contracts">
 						<option th:each="contract : ${contracts}"
-							th:value="${contract.id}" th:text="${contract.number}"></option>
+							th:value="${contract.id}" th:text="${contract.code}"></option>
 					</datalist>
 				</div>
 			</div>

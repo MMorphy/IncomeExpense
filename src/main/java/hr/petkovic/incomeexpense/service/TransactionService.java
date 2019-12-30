@@ -19,6 +19,7 @@ import hr.petkovic.incomeexpense.repository.TransactionTypeRepository;
 @Service
 public class TransactionService {
 
+	// TODO refactor this so that you use other services not repositories
 	@Autowired
 	private FinancialTransactionRepository transRepo;
 
@@ -31,12 +32,16 @@ public class TransactionService {
 	@Autowired
 	private ContractRepository contractRepo;
 
+	@Autowired
+	private ContractService contractService;
+
 	public TransactionService(FinancialTransactionRepository transRepo, CompanyRepository companyRepo,
-			TransactionTypeRepository typeRepo, ContractRepository contractRepo) {
+			TransactionTypeRepository typeRepo, ContractRepository contractRepo, ContractService contractService) {
 		this.transRepo = transRepo;
 		this.companyRepo = companyRepo;
 		this.typeRepo = typeRepo;
 		this.contractRepo = contractRepo;
+		this.contractService = contractService;
 	}
 
 	public FinancialTransaction findTransactionById(Long id) {
@@ -59,6 +64,10 @@ public class TransactionService {
 			return list;
 		}
 		return list;
+	}
+
+	public List<FinancialTransaction> findTransactionsByContractId(Long id) {
+		return (List<FinancialTransaction>) contractService.findContractById(id).getTransactions();
 	}
 
 	public List<FinancialTransaction> findTransactionsByUsername(String username) {

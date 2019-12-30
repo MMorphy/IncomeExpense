@@ -24,12 +24,12 @@ public class Contract {
 	private Long id;
 
 	@Column(nullable = false)
-	private String number;
+	private String code;
 
 	@Column(nullable = false)
 	private Float agreedAmount;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "currency_id")
 	private Currency agreedCurrency;
 
@@ -39,11 +39,11 @@ public class Contract {
 	@JoinColumn(name = "contract_id")
 	private Collection<FinancialTransaction> transactions;
 
-	public Contract(Long id, String number, Float agreedAmount, Currency agreedCurrency, Float currentAmount,
+	public Contract(Long id, String code, Float agreedAmount, Currency agreedCurrency, Float currentAmount,
 			Collection<FinancialTransaction> transactions) {
 		super();
 		this.id = id;
-		this.number = number;
+		this.code = code;
 		this.agreedAmount = agreedAmount;
 		this.agreedCurrency = agreedCurrency;
 		this.currentAmount = currentAmount;
@@ -62,12 +62,12 @@ public class Contract {
 		this.id = id;
 	}
 
-	public String getNumber() {
-		return number;
+	public String getCode() {
+		return code;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public Float getAgreedAmount() {

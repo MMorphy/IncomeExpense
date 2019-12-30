@@ -3,7 +3,7 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="ISO-8859-1">
-<title>Buyers</title>
+<title>Contracts</title>
 <th:block th:include="fragments/generalFragments.html :: headerfiles">
 </th:block>
 <script type="text/javascript"
@@ -15,44 +15,44 @@
 
 	<script>
 		$(document).ready(function() {
-			$('#buyersTable').DataTable();
+			$('#contractsTable').DataTable();
 		});
 	</script>
 
 	<div class="col-md-12">
 		<div class="col-md-12">
-			<h1 class="col-md-3">Buyers</h1>
+			<h1 class="col-md-3">Contracts</h1>
 		</div>
 		<div class="col-md-12">
-			<table class="table" id="buyersTable">
+			<table class="table" id="contractsTable">
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Name</th>
 						<th>Code</th>
-						<th>Description</th>
-						<th>Contracts</th>
+						<th>Agreed amount</th>
+						<th>Current amount</th>
+						<th>Currency</th>
+						<th>Transactions</th>
 						<th>Remove</th>
 						<th>Edit</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="buyer : ${buyers}">
-						<td th:text="${buyer.id}"></td>
-						<td th:text="${buyer.name}"></td>
-						<td th:text="${buyer.code}"></td>
-						<td th:text="${buyer.description}"></td>
-						<!-- TODO: Add titles/rows (container-fluid and row) in html to add/edit -->
-
-						<td><a th:href="@{'/contracts/' + ${buyer.id}}">Contracts
+					<tr th:each="contract : ${contracts}">
+						<td th:text="${contract.id}"></td>
+						<td th:text="${contract.code}"></td>
+						<td th:text="${contract.agreedAmount}"></td>
+						<td th:text="${contract.currentAmount}"></td>
+						<td th:text="${contract.agreedCurrency.name}"></td>
+						<td><a th:href="@{'/trans/contracts/' + ${contract.id}}">Transactions
 						</a></td>
 						<td>
-							<form th:action="@{'/buyer/delete/' + ${buyer.id}}" method="post">
+							<form th:action="@{'/contracts/delete/' + ${contract.id}}" method="post">
 								<button>Remove</button>
 							</form>
 						</td>
 						<td>
-							<form th:action="@{'/buyer/edit/' + ${buyer.id}}" method="get">
+							<form th:action="@{'/contracts/edit/' + ${contract.id}}" method="get">
 								<button>Edit</button>
 							</form>
 						</td>
@@ -61,8 +61,8 @@
 			</table>
 
 		</div>
-		<form th:action="@{/buyer/add}" method="get">
-			<button>Add new buyer</button>
+		<form th:action="@{/contracts/add}" method="get">
+			<button>Add new contract</button>
 		</form>
 	</div>
 

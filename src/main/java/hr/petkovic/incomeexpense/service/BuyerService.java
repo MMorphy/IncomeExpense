@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hr.petkovic.incomeexpense.entity.Buyer;
+import hr.petkovic.incomeexpense.entity.Contract;
 import hr.petkovic.incomeexpense.repository.BuyerRepository;
 
 @Service
@@ -51,5 +52,13 @@ public class BuyerService {
 
 	public void deleteBuyerById(Long id) {
 		buyerRepo.deleteById(id);
+	}
+
+	public Buyer findBuyerByContractId(Long id) {
+		try {
+			return buyerRepo.findByContracts_Id(id).get();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }
