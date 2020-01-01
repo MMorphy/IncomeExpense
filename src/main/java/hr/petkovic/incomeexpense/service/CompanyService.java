@@ -29,18 +29,37 @@ public class CompanyService {
 	}
 
 	public List<Company> findAllCompanies() {
-		return this.companyRepo.findAll();
+		return companyRepo.findAll();
 	}
 
 	public Company saveCompany(Company comp) {
-		return this.companyRepo.save(comp);
+		return companyRepo.save(comp);
+	}
+
+	public void deleteCompanyById(Long id) {
+		companyRepo.deleteById(id);
+	}
+
+	public Company updateCompany(Long id, Company comp) {
+		Optional<Company> optComp = companyRepo.findById(id);
+		if (optComp.isPresent()) {
+			Company c = optComp.get();
+			c.setCurrentCash(comp.getCurrentCash());
+			c.setLocation(comp.getLocation());
+			c.setName(comp.getName());
+			c.setTransactions(comp.getTransactions());
+			return companyRepo.save(c);
+		} else {
+			return companyRepo.save(comp);
+		}
 	}
 
 	public Company findCompanyByTransaction(FinancialTransaction trans) {
-		Optional<Company> optCompany = this.companyRepo.findByTransactions_Id(trans.getId());
+		Optional<Company> optCompany = companyRepo.findByTransactions_Id(trans.getId());
 		if (optCompany.isPresent()) {
 			return optCompany.get();
 		} else
 			return null;
 	}
+
 }

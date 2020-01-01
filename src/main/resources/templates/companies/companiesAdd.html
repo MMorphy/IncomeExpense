@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Company adding</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</head>
+<body>
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<form method="POST" th:object="${addCompany}"
+		th:action="@{/companies/add/}">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="form-group col-lg-3">
+					<label for="name">Name:</label> <input type="text"
+						class="form-control" id="name" th:field="*{name}"
+						required="required">
+				</div>
+				<div class="form-group col-lg-3">
+					<label for="location">Location:</label> <input type="text"
+						class="form-control" id="location" th:field="*{location}"
+						required="required">
+				</div>
+				<div class="form-group col-lg-3">
+					<label for="currentCash" class="control-label">Current cash:</label> <input
+						type="number" class="form-control" id="currentCash"
+						th:field="*{currentCash}" required="required" step="0.01">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-lg-4">
+				<input type="submit" th:value="Submit" name="action"> <input
+					type="button" onclick="history.go(-1);" value="Back">
+			</div>
+		</div>
+	</form>
+
+
+</body>
+</html>

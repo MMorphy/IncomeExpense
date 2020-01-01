@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hr.petkovic.incomeexpense.entity.Buyer;
-import hr.petkovic.incomeexpense.entity.Contract;
 import hr.petkovic.incomeexpense.repository.BuyerRepository;
 
 @Service

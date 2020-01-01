@@ -35,13 +35,18 @@ public class TransactionService {
 	@Autowired
 	private ContractService contractService;
 
+	@Autowired
+	private CompanyService companyService;
+
 	public TransactionService(FinancialTransactionRepository transRepo, CompanyRepository companyRepo,
-			TransactionTypeRepository typeRepo, ContractRepository contractRepo, ContractService contractService) {
+			TransactionTypeRepository typeRepo, ContractRepository contractRepo, ContractService contractService,
+			CompanyService companyService) {
 		this.transRepo = transRepo;
 		this.companyRepo = companyRepo;
 		this.typeRepo = typeRepo;
 		this.contractRepo = contractRepo;
 		this.contractService = contractService;
+		this.companyService = companyService;
 	}
 
 	public FinancialTransaction findTransactionById(Long id) {
@@ -68,6 +73,10 @@ public class TransactionService {
 
 	public List<FinancialTransaction> findTransactionsByContractId(Long id) {
 		return (List<FinancialTransaction>) contractService.findContractById(id).getTransactions();
+	}
+
+	public List<FinancialTransaction> findTransactionsByCompanyId(Long id) {
+		return (List<FinancialTransaction>) companyService.findCompanyById(id).getTransactions();
 	}
 
 	public List<FinancialTransaction> findTransactionsByUsername(String username) {

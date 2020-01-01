@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Companies</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</th:block>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>
+</head>
+<body>
+	   
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<script>
+		$(document).ready(function() {
+			$('#companyTable').DataTable();
+		});
+	</script>
+
+	<div class="col-md-12">
+		<div class="col-md-12">
+			<h1 class="col-md-3">Companies</h1>
+		</div>
+		<div class="col-md-12">
+			<table class="table" id="companyTable">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Location</th>
+						<th>Current Cash</th>
+						<th>Transactions</th>
+						<th>Remove</th>
+						<th>Edit</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="company : ${companies}">
+						<td th:text="${company.id}"></td>
+						<td th:text="${company.name}"></td>
+						<td th:text="${company.location}"></td>
+						<td th:text="${company.currentCash}"></td>
+						<td><a th:href="@{'/trans/companies/' + ${company.id}}">Transactions
+						</a></td>
+						<td>
+							<form th:action="@{'/companies/delete/' + ${company.id}}" method="post">
+								<button>Remove</button>
+							</form>
+						</td>
+						<td>
+							<form th:action="@{'/companies/edit/' + ${company.id}}" method="get">
+								<button>Edit</button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+		<form th:action="@{/companies/add}" method="get">
+			<button>Add new company</button>
+		</form>
+	</div>
+
+
+</body>
+</html>
