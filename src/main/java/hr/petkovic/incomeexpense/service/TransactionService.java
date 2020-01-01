@@ -1,6 +1,9 @@
 package hr.petkovic.incomeexpense.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -8,6 +11,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hr.petkovic.incomeexpense.DTO.PlannedAggDTO;
 import hr.petkovic.incomeexpense.entity.Contract;
 import hr.petkovic.incomeexpense.entity.FinancialTransaction;
 import hr.petkovic.incomeexpense.entity.TransactionType;
@@ -117,5 +121,15 @@ public class TransactionService {
 
 	public void deleteTransactionById(Long id) {
 		this.transRepo.deleteById(id);
+	}
+
+	public Double findSumForTypeLvl0(PlannedAggDTO agg) {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Date toDate = agg.getToDate();
+		Date fromDate = agg.getFromDate();
+		String typeName = agg.getType().getName();
+		Double sum = transRepo.findAllTransactionsSumByTypeLvl0AndInPeriod(df.format(fromDate), df.format(toDate),
+				typeName);
+		return sum;
 	}
 }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Planned VS Achieved</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</th:block>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>
+</head>
+<body>
+	   
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<script>
+		$(document).ready(function() {
+			$('#generalTable').DataTable();
+		});
+	</script>
+
+	<div class="col-md-12">
+		<div class="col-md-12">
+			<h1 class="col-md-3">Planed VS Achieved</h1>
+		</div>
+		<div class="col-md-12">
+			<h2 class="col-md-3">Income and Expenses General</h2>
+			<table class="table" id="generalTable">
+				<thead>
+					<tr>
+						<th>From</th>
+						<th>To</th>
+						<th>Type</th>
+						<th>Amount planned</th>
+						<th>Amount achieved</th>
+						<th>Percentage</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="DTO : ${pvaGeneralDTOs}">
+						<td th:text="${DTO.fromDate}"></td>
+						<td th:text="${DTO.toDate}"></td>
+						<td	th:text="${DTO.type.name}"></td>
+						<td th:text="${DTO.plannedAmount}"></td>
+						<td th:text="${DTO.achievedAmount}"></td>
+						<td th:text="${DTO.achievedAmount / DTO.plannedAmount} + '%'"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+</body>
+</html>

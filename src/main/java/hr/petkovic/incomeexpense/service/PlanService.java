@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hr.petkovic.incomeexpense.DTO.PlannedAggDTO;
 import hr.petkovic.incomeexpense.entity.Plan;
 import hr.petkovic.incomeexpense.repository.PlanRepository;
 
@@ -51,5 +52,9 @@ public class PlanService {
 
 	public void deletePlanById(Long id) {
 		planRepo.deleteById(id);
+	}
+
+	public List<PlannedAggDTO> getAllPlansLevel0() {
+		return planRepo.sumAmountByTransactionDateLevelOne();
 	}
 }
