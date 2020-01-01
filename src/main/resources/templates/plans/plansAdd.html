@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Plan adding</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</head>
+<body>
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<form method="POST" th:object="${addPlan}" th:action="@{/plans/add/}">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="form-group col-lg-6">
+					<label for="fromDate">From:</label> <input type="date"
+						class="form-control" id="fromDate" th:value="*{{fromDate}}" th:field="*{fromDate}"
+						required="required">
+				</div>
+				<div class="form-group col-lg-6">
+					<label for="toDate">To:</label> <input type="date"
+						class="form-control" id="fromDate"th:value="*{{toDate}}" th:field="*{toDate}"
+						required="required">
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-lg-5">
+					<label for="type">Transaction type:</label> <input list="types"
+						class="form-control" th:field="*{plan.type}" id="type">
+					<datalist id="types">
+						<option th:each="type : ${types}" th:value="${type.id}"
+							th:text="${type.name + '/' + type.subtypeOne + '/' + type.subtypeTwo}"></option>
+					</datalist>
+				</div>
+				<div class="form-group col-lg-5">
+					<label for="amount" class="control-label">Amount:</label> <input
+						type="number" class="form-control" id="amount"
+						th:field="*{plan.amount}" required="required" step="0.01">
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-lg-4">
+					<input type="submit" th:value="Submit" name="action"> <input
+						type="button" onclick="history.go(-1);" value="Back">
+				</div>
+			</div>
+		</div>
+	</form>
+
+
+</body>
+</html>

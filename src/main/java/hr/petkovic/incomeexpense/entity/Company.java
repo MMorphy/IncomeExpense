@@ -31,6 +31,7 @@ public class Company {
 	@Column(nullable = false)
 	private String location;
 
+	// Add currency
 	@Column(nullable = false)
 	private Float currentCash;
 

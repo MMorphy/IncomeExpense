@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Plans</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</th:block>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>
+</head>
+<body>
+	   
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<script>
+		$(document).ready(function() {
+			$('#planTable').DataTable();
+		});
+	</script>
+
+	<div class="col-md-12">
+		<div class="col-md-12">
+			<h1 class="col-md-3">Plans</h1>
+		</div>
+		<div class="col-md-12">
+			<table class="table" id="planTable">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>From</th>
+						<th>To</th>
+						<th>Amount</th>
+						<th>Type</th>
+						<th>Subtype 1</th>
+						<th>Subtype 2</th>
+						<th>Remove</th>
+						<th>Edit</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="plan : ${plans}">
+						<td th:text="${plan.id}"></td>
+						<td th:text="${plan.fromDate}"></td>
+						<td th:text="${plan.toDate}"></td>
+						<td th:text="${plan.amount}"></td>
+						<td th:text="${plan.type.name}"></td>
+						<td th:text="${plan.type.subtypeOne}"></td>
+						<td th:text="${plan.type.subtypeTwo}"></td>
+						<td>
+							<form th:action="@{'/plans/delete/' + ${plan.id}}" method="post">
+								<button>Remove</button>
+							</form>
+						</td>
+						<td>
+							<form th:action="@{'/plans/edit/' + ${plan.id}}" method="get">
+								<button>Edit</button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+		<form th:action="@{/plans/add}" method="get">
+			<button>Add new plan</button>
+		</form>
+	</div>
+
+
+</body>
+</html>

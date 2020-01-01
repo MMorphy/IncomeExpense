@@ -1,6 +1,5 @@
 package hr.petkovic.incomeexpense.service;
 
-import java.security.cert.PKIXRevocationChecker.Option;
 import java.util.List;
 import java.util.Optional;
 
