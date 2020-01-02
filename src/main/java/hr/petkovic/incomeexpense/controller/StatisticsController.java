@@ -30,12 +30,26 @@ public class StatisticsController {
 
 	@GetMapping("/planned")
 	public String getPlannedVsAchieved(Model model) {
-		List<PlannedVsAchievedDTO> toShow = new ArrayList<>();
+		List<PlannedVsAchievedDTO> toShowZero = new ArrayList<>();
 		List<PlannedAggDTO> aggs = planService.getAllPlansLevel0();
 		for (PlannedAggDTO agg : aggs) {
-			toShow.add(new PlannedVsAchievedDTO(agg, transService.findSumForTypeLvl0(agg)));
+			toShowZero.add(new PlannedVsAchievedDTO(agg, transService.findSumForTypeLvl0(agg)));
 		}
-		model.addAttribute("pvaGeneralDTOs", toShow);
+		model.addAttribute("pvaLvl0DTOs", toShowZero);
+
+		List<PlannedVsAchievedDTO> toShowOne = new ArrayList<>();
+		aggs = planService.getAllPlansLevel1();
+		for (PlannedAggDTO agg : aggs) {
+			toShowOne.add(new PlannedVsAchievedDTO(agg, transService.findSumForTypeLvl1(agg)));
+		}
+		model.addAttribute("pvaLvl1DTOs", toShowOne);
+
+		List<PlannedVsAchievedDTO> toShowTwo = new ArrayList<>();
+		aggs = planService.getAllPlansLevel2();
+		for (PlannedAggDTO agg : aggs) {
+			toShowTwo.add(new PlannedVsAchievedDTO(agg, transService.findSumForTypeLvl2(agg)));
+		}
+		model.addAttribute("pvaLvl2DTOs", toShowTwo);
 		return "statistics/plansVsTransactions";
 	}
 }

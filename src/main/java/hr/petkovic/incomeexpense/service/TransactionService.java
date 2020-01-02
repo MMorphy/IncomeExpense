@@ -132,4 +132,35 @@ public class TransactionService {
 				typeName);
 		return sum;
 	}
+
+	public Double findSumForTypeLvl1(PlannedAggDTO agg) {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Date toDate = agg.getToDate();
+		Date fromDate = agg.getFromDate();
+		String typeName = agg.getType().getName();
+		String subtypeOne = agg.getType().getSubtypeOne();
+		Double sum = transRepo.findAllTransactionsSumByTypeLvl0AndTypeLvl1AndInPeriod(df.format(fromDate),
+				df.format(toDate), typeName, subtypeOne);
+		if (sum != null) {
+			return sum;
+		} else {
+			return 0.0;
+		}
+	}
+
+	public Double findSumForTypeLvl2(PlannedAggDTO agg) {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Date toDate = agg.getToDate();
+		Date fromDate = agg.getFromDate();
+		String typeName = agg.getType().getName();
+		String subtypeOne = agg.getType().getSubtypeOne();
+		String subtypeTwo = agg.getType().getSubtypeTwo();
+		Double sum = transRepo.findAllTransactionsSumByTypeLvl0AndTypeLvl1AndTypeLvl2AndInPeriod(df.format(fromDate),
+				df.format(toDate), typeName, subtypeOne, subtypeTwo);
+		if (sum != null) {
+			return sum;
+		} else {
+			return 0.0;
+		}
+	}
 }

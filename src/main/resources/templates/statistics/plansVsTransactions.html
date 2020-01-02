@@ -16,6 +16,7 @@
 	<script>
 		$(document).ready(function() {
 			$('#generalTable').DataTable();
+			$('#lvl1Table').DataTable();
 		});
 	</script>
 
@@ -25,28 +26,89 @@
 		</div>
 		<div class="col-md-12">
 			<h2 class="col-md-3">Income and Expenses General</h2>
-			<table class="table" id="generalTable">
-				<thead>
-					<tr>
-						<th>From</th>
-						<th>To</th>
-						<th>Type</th>
-						<th>Amount planned</th>
-						<th>Amount achieved</th>
-						<th>Percentage</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="DTO : ${pvaGeneralDTOs}">
-						<td th:text="${DTO.fromDate}"></td>
-						<td th:text="${DTO.toDate}"></td>
-						<td	th:text="${DTO.type.name}"></td>
-						<td th:text="${DTO.plannedAmount}"></td>
-						<td th:text="${DTO.achievedAmount}"></td>
-						<td th:text="${DTO.achievedAmount / DTO.plannedAmount} + '%'"></td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="col-md-12">
+				<table class="table" id="generalTable">
+					<thead>
+						<tr>
+							<th>From</th>
+							<th>To</th>
+							<th>Type</th>
+							<th>Amount planned</th>
+							<th>Amount achieved</th>
+							<th>Percentage</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="DTO : ${pvaLvl0DTOs}">
+							<td th:text="${DTO.fromDate}"></td>
+							<td th:text="${DTO.toDate}"></td>
+							<td th:text="${DTO.type.name}"></td>
+							<td th:text="${DTO.plannedAmount}"></td>
+							<td th:text="${DTO.achievedAmount}"></td>
+							<td th:text="${DTO.achievedAmount / DTO.plannedAmount} + '%'"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="col-md-12">
+			<h2 class="col-md-3">Income and Expenses First Subtype</h2>
+			<div class="col-md-12">
+
+				<table class="table" id="lvl1Table">
+					<thead>
+						<tr>
+							<th>From</th>
+							<th>To</th>
+							<th>Type</th>
+							<th>Amount planned</th>
+							<th>Amount achieved</th>
+							<th>Percentage</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="DTO : ${pvaLvl1DTOs}">
+							<td th:text="${DTO.fromDate}"></td>
+							<td th:text="${DTO.toDate}"></td>
+							<td th:text="${DTO.type.name + '/' + DTO.type.subtypeOne}"></td>
+							<td th:text="${DTO.plannedAmount}"></td>
+							<td th:text="${DTO.achievedAmount}"></td>
+							<td th:text="${DTO.achievedAmount / DTO.plannedAmount} + '%'"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		
+		<div class="col-md-12">
+			<h2 class="col-md-3">Income and Expenses Second Subtype</h2>
+			<div class="col-md-12">
+
+				<table class="table" id="lvl2Table">
+					<thead>
+						<tr>
+							<th>From</th>
+							<th>To</th>
+							<th>Type</th>
+							<th>Amount planned</th>
+							<th>Amount achieved</th>
+							<th>Percentage</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="DTO : ${pvaLvl2DTOs}">
+							<td th:text="${DTO.fromDate}"></td>
+							<td th:text="${DTO.toDate}"></td>
+							<td th:text="${DTO.type.name + '/' + DTO.type.subtypeOne + '/' + DTO.type.subtypeTwo}"></td>
+							<td th:text="${DTO.plannedAmount}"></td>
+							<td th:text="${DTO.achievedAmount}"></td>
+							<td th:text="${DTO.achievedAmount / DTO.plannedAmount} + '%'"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 
