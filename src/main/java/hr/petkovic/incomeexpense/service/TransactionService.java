@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hr.petkovic.incomeexpense.DTO.PlannedAggDTO;
+import hr.petkovic.incomeexpense.DTO.TimeAggDTO;
 import hr.petkovic.incomeexpense.entity.Contract;
 import hr.petkovic.incomeexpense.entity.FinancialTransaction;
 import hr.petkovic.incomeexpense.entity.TransactionType;
@@ -162,5 +163,21 @@ public class TransactionService {
 		} else {
 			return 0.0;
 		}
+	}
+
+	public List<TimeAggDTO> findIncomeTransactionsGroupedByYearAndMonth() {
+		return transRepo.findAllIncomeTransactionSumsByYearAndMonth();
+	}
+
+	public List<TimeAggDTO> findExpensesTransactionsGroupedByYearAndMonth() {
+		return transRepo.findAllExpensesTransactionSumsByYearAndMonth();
+	}
+
+	public List<TimeAggDTO> findAllIncomeTransactionsGroupedByYear() {
+		return transRepo.findAllIncomeTransactionSumsByYear();
+	}
+
+	public List<TimeAggDTO> findAllExpensesTransactionsGroupedByYear() {
+		return transRepo.findAllExpensesTransactionSumsByYear();
 	}
 }

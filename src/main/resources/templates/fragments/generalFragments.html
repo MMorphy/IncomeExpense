@@ -35,10 +35,15 @@
 					<li><a th:href="@{/plans/}">Plans</a></li>
 					<li><a th:href="@{/administration/}">Administration</a></li>
 					<li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')"><a
-						class="dropdown-toggle" data-toggle="dropdown" href="#">Statistics <span class="caret"></span>
+						class="dropdown-toggle" data-toggle="dropdown" href="#">Statistics
+							<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a th:href="@{/statistics/planned/}"> Planned/Achieved</a></li>
+							<li><a th:href="@{/statistics/planned/}">
+									Planned/Achieved</a></li>
+							<li><a th:href="@{/statistics/time/}">
+									Time comparison</a></li>
+
 						</ul></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
