@@ -138,9 +138,13 @@ public class TransactionController {
 		}
 		Contract newContract = editTrans.getContract();
 		Contract oldContract = contractService.findContractByTransaction(oldTrans);
-		if (!oldContract.equals(newContract) || !oldContract.getId().equals(newContract.getId())) {
-			oldContract.removeTransaction(oldTrans);
-			contractService.saveContract(oldContract);
+		if ((oldContract == null && newContract != null) || !oldContract.equals(newContract)
+				|| !oldContract.getId().equals(newContract.getId())) {
+			if (oldContract != null) {
+				oldContract.removeTransaction(oldTrans);
+				contractService.saveContract(oldContract);
+				transService.deleteTransactionById(oldTrans.getId());
+			}
 
 			editTrans.getTrans().setCreatedBy(oldTrans.getCreatedBy());
 			newContract.addTransaction(editTrans.getTrans());

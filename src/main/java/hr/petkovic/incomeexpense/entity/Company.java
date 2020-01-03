@@ -40,14 +40,20 @@ public class Company {
 	@JoinColumn(name = "company_id")
 	private Collection<FinancialTransaction> transactions;
 
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JoinColumn(name = "company_id")
+	private Collection<Buyer> buyers;
+
 	public Company(Long id, String name, String location, Float currentCash,
-			Collection<FinancialTransaction> transactions) {
+			Collection<FinancialTransaction> transactions, Collection<Buyer> buyers) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.location = location;
 		this.currentCash = currentCash;
 		this.transactions = transactions;
+		this.buyers = buyers;
 	}
 
 	public Company() {
@@ -92,6 +98,14 @@ public class Company {
 
 	public void setTransactions(Collection<FinancialTransaction> transactions) {
 		this.transactions = transactions;
+	}
+
+	public Collection<Buyer> getBuyers() {
+		return buyers;
+	}
+
+	public void setBuyers(Collection<Buyer> buyers) {
+		this.buyers = buyers;
 	}
 
 	public boolean addTransaction(FinancialTransaction trans) {

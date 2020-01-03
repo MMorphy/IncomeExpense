@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import hr.petkovic.incomeexpense.entity.Buyer;
 import hr.petkovic.incomeexpense.service.BuyerService;
+import hr.petkovic.incomeexpense.service.CompanyService;
 
 @Controller
 @RequestMapping("/buyer")
@@ -17,14 +18,23 @@ public class BuyerController {
 
 	@Autowired
 	private BuyerService buyerService;
+	@Autowired
+	private CompanyService companyService;
 
-	public BuyerController(BuyerService buyerService) {
+	public BuyerController(BuyerService buyerService, CompanyService companyService) {
 		this.buyerService = buyerService;
+		this.companyService = companyService;
 	}
 
 	@GetMapping()
 	public String getAllBuyers(Model model) {
 		model.addAttribute("buyers", buyerService.findAllBuyers());
+		return "buyers/buyers";
+	}
+
+	@GetMapping("/{id}")
+	public String getAllBuyers(@PathVariable("id") Long id,Model model) {
+		model.addAttribute("buyers", companyService.findCompanyById(id).getBuyers());
 		return "buyers/buyers";
 	}
 
