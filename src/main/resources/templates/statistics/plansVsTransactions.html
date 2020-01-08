@@ -45,7 +45,7 @@
 							<td th:text="${DTO.type.name}"></td>
 							<td th:text="${DTO.plannedAmount}"></td>
 							<td th:text="${DTO.achievedAmount != null} ?  ${DTO.achievedAmount} : '0.0'"></td>
-							<td th:text="${DTO.achievedAmount != null} ?  ${DTO.achievedAmount / DTO.plannedAmount} + '%' : '0.0%'"></td>
+							<td th:text="${DTO.achievedAmount != null} ?  ${DTO.achievedAmount / DTO.plannedAmount * 100} + '%' : '0.0%'"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -74,7 +74,7 @@
 							<td th:text="${DTO.type.name + '/' + DTO.type.subtypeOne}"></td>
 							<td th:text="${DTO.plannedAmount}"></td>
 							<td th:text="${DTO.achievedAmount != null} ?  ${DTO.achievedAmount} : '0.0'"></td>
-							<td th:text="${DTO.achievedAmount != null} ?  ${DTO.achievedAmount / DTO.plannedAmount} + '%' : '0%'"></td>
+							<td th:text="${DTO.achievedAmount != null} ?  ${DTO.achievedAmount / DTO.plannedAmount * 100} + '%' : '0.0%'"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -104,7 +104,7 @@
 							<td th:text="${DTO.type.name + '/' + DTO.type.subtypeOne + '/' + DTO.type.subtypeTwo}"></td>
 							<td th:text="${DTO.plannedAmount}"></td>
 							<td th:text="${DTO.achievedAmount != null} ?  ${DTO.achievedAmount} : '0.0'"></td>
-							<td th:text="${DTO.achievedAmount != null} ?  #numbers.formatDecimal(orderSum, 0, 'COMMA', 2, 'POINT')${DTO.achievedAmount / DTO.plannedAmount} + '%' : '0%'"></td>
+							<td th:text="${DTO.achievedAmount != null} ?  ${DTO.achievedAmount / DTO.plannedAmount * 100} + '%' : '0.0%'"></td>
 						</tr>
 					</tbody>
 				</table>

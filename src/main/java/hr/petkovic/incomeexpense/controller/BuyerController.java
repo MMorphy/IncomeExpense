@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import hr.petkovic.incomeexpense.DTO.BuyerDTO;
 import hr.petkovic.incomeexpense.entity.Buyer;
+import hr.petkovic.incomeexpense.entity.Company;
 import hr.petkovic.incomeexpense.service.BuyerService;
 import hr.petkovic.incomeexpense.service.CompanyService;
 
@@ -33,33 +35,49 @@ public class BuyerController {
 	}
 
 	@GetMapping("/{id}")
-	public String getAllBuyers(@PathVariable("id") Long id,Model model) {
+	public String getAllBuyers(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("buyers", companyService.findCompanyById(id).getBuyers());
 		return "buyers/buyers";
 	}
 
 	@GetMapping("/add")
 	public String getBuyerAdding(Model model) {
-		model.addAttribute("addBuyer", new Buyer());
+		model.addAttribute("addBuyer", new BuyerDTO());
+		model.addAttribute("companies", companyService.findAllCompanies());
 		return "buyers/buyersAdd";
 	}
 
 	@PostMapping("/add")
-	public String addBuyer(Buyer addBuyer) {
-		buyerService.saveBuyer(addBuyer);
+	public String addBuyer(BuyerDTO addBuyer) {
+		Company c = addBuyer.getCompany();
+		c.getBuyers().add(addBuyer.getBuyer());
+		companyService.updateCompany(c.getId(), c);
 		return "redirect:/buyer";
 	}
 
 	@GetMapping("/edit/{id}")
 	public String getBuyerEditing(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("editBuyer", buyerService.findBuyerById(id));
+		BuyerDTO buyer = new BuyerDTO();
+		buyer.setBuyer(buyerService.findBuyerById(id));
+		buyer.setCompany(companyService.findCompanyByBuyerId(id));
+		model.addAttribute("editBuyer", buyer);
+		model.addAttribute("companies", companyService.findAllCompanies());
 		return "buyers/buyersEdit";
 
 	}
 
 	@PostMapping("/edit/{id}")
-	public String editBuyer(@PathVariable("id") Long id, Buyer editBuyer, Model model) {
-		buyerService.updateBuyer(id, editBuyer);
+	public String editBuyer(@PathVariable("id") Long id, BuyerDTO editBuyer, Model model) {
+		Company oldCompany = companyService.findCompanyByBuyerId(id);
+		editBuyer.getBuyer().setId(id);
+		if (!editBuyer.getCompany().equals(oldCompany)) {
+			Buyer oldBuyer = buyerService.findBuyerById(id);
+			oldCompany.getBuyers().remove(oldBuyer);
+			companyService.updateCompany(oldCompany.getId(), oldCompany);
+		}
+		Company newCompany = editBuyer.getCompany();
+		newCompany.getBuyers().add(editBuyer.getBuyer());
+		companyService.updateCompany(newCompany.getId(), newCompany);
 		model.addAttribute("buyers", buyerService.findAllBuyers());
 		return "redirect:/buyer";
 	}

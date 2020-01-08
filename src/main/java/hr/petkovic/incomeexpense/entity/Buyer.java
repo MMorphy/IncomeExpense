@@ -107,4 +107,13 @@ public class Buyer {
 			return false;
 		}
 	}
+
+	public boolean findBuyerWithContract(Contract cont) {
+		for (Contract c : contracts) {
+			if (c.equals(cont) || c.getId().equals(cont.getId())) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

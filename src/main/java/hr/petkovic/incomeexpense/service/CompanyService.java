@@ -48,6 +48,7 @@ public class CompanyService {
 			c.setLocation(comp.getLocation());
 			c.setName(comp.getName());
 			c.setTransactions(comp.getTransactions());
+			c.setBuyers(comp.getBuyers());
 			return companyRepo.save(c);
 		} else {
 			return companyRepo.save(comp);
@@ -62,4 +63,19 @@ public class CompanyService {
 			return null;
 	}
 
+	public Company findCompanyByTransactionInBuyer(FinancialTransaction trans) {
+		Optional<Company> optCompany = companyRepo.findByBuyers_Contracts_Transactions_Id(trans.getId());
+		if (optCompany.isPresent()) {
+			return optCompany.get();
+		} else
+			return null;
+	}
+
+	public Company findCompanyByBuyerId(Long buyerId) {
+		Optional<Company> optBuyer = companyRepo.findByBuyers_Id(buyerId);
+		if (optBuyer.isPresent()) {
+			return optBuyer.get();
+		} else
+			return null;
+	}
 }

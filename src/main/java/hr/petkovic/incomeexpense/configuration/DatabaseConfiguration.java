@@ -43,8 +43,8 @@ public class DatabaseConfiguration {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost:3306/erp");
-		dataSource.setUsername("admin");
-		dataSource.setPassword("admin");
+		dataSource.setUsername("administrator");
+		dataSource.setPassword("administrator");
 		return dataSource;
 	}
 
@@ -63,7 +63,7 @@ public class DatabaseConfiguration {
 
 	private Properties additionalProperties() {
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "validate");
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
 		properties.setProperty("hibernate.current_session_context_class", "thread");
 		properties.setProperty("hibernate.show_sql", "true");

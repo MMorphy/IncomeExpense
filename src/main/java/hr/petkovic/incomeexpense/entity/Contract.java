@@ -118,11 +118,14 @@ public class Contract {
 
 	public boolean removeTransaction(FinancialTransaction transaction) {
 		try {
-			this.transactions.remove(transaction);
-			if (transaction.getType().getName().equals("Income")) {
-				this.currentAmount -= transaction.getAmount();
-			} else if (transaction.getType().getName().equals("Expenses")) {
-				this.currentAmount += transaction.getAmount();
+			if (this.transactions.remove(transaction)) {
+				if (transaction.getType().getName().equals("Income")) {
+					this.currentAmount -= transaction.getAmount();
+				} else if (transaction.getType().getName().equals("Expenses")) {
+					this.currentAmount += transaction.getAmount();
+				}
+			} else {
+				return false;
 			}
 		} catch (Exception ex) {
 			return false;

@@ -1,6 +1,7 @@
 package hr.petkovic.incomeexpense.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import hr.petkovic.incomeexpense.DTO.FinancialTransactionDTO;
+import hr.petkovic.incomeexpense.entity.Buyer;
 import hr.petkovic.incomeexpense.entity.Company;
 import hr.petkovic.incomeexpense.entity.Contract;
 import hr.petkovic.incomeexpense.entity.FinancialTransaction;
 import hr.petkovic.incomeexpense.entity.User;
+import hr.petkovic.incomeexpense.service.BuyerService;
 import hr.petkovic.incomeexpense.service.CompanyService;
 import hr.petkovic.incomeexpense.service.ContractService;
 import hr.petkovic.incomeexpense.service.CurrencyService;
@@ -38,14 +41,18 @@ public class TransactionController {
 	private UserService userService;
 	@Autowired
 	private ContractService contractService;
+	@Autowired
+	private BuyerService buyerService;
 
 	public TransactionController(TransactionService transService, CompanyService companyService,
-			CurrencyService currencyService, UserService userService, ContractService contractService) {
+			CurrencyService currencyService, UserService userService, ContractService contractService,
+			BuyerService buyerService) {
 		this.transService = transService;
 		this.companyService = companyService;
 		this.currencyService = currencyService;
 		this.userService = userService;
 		this.contractService = contractService;
+		this.buyerService = buyerService;
 	}
 
 	@GetMapping()
@@ -83,22 +90,25 @@ public class TransactionController {
 	}
 
 	@PostMapping("/add")
-	public String addTransaction(FinancialTransactionDTO addTrans) {
+	public String addTransaction(FinancialTransactionDTO addTrans, Model model) {
 		User currentUser = userService
 				.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		FinancialTransaction trans = addTrans.getTrans();
 		trans.setCreateDate(new Date());
 		trans.setCreatedBy(currentUser);
 		Company comp = addTrans.getCompany();
-		comp.addTransaction(trans);
-		companyService.saveCompany(comp);
-		if (addTrans.getContract() != null) {
-			Contract cont = addTrans.getContract();
+		Contract cont = addTrans.getContract();
+		if (cont == null) {
+			comp.addTransaction(trans);
+		} else {
 			cont.addTransaction(trans);
-			contractService.saveContract(cont);
+			Buyer buyer = buyerService.findBuyerByContractId(cont.getId());
+			buyer.addContract(cont);
 		}
-
-		return "redirect:/";
+		companyService.saveCompany(comp);
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		model.addAttribute("transactions", transService.findTransactionsByUsername(username));
+		return "redirect:/trans/" + username;
 	}
 
 	@GetMapping("/edit/{id}")
@@ -120,39 +130,87 @@ public class TransactionController {
 
 	@PostMapping("/edit/{id}")
 	public String transactionEdit(@PathVariable("id") Long id, Model model, FinancialTransactionDTO editTrans) {
+		editTrans.getTrans().setId(id);
+
+		boolean companyChanged = false;
+		boolean contractChanged = false;
+
 		FinancialTransaction oldTrans = transService.findTransactionById(id);
-		boolean needToDelete = false;
-		// TODO Change save to update you dummy... and update the transaction if there
-		// were no changes to contracts/companies
-		// See contract controller for better details
-		Company newCompany = editTrans.getCompany();
+		FinancialTransaction newTrans = editTrans.getTrans();
+
 		Company oldCompany = companyService.findCompanyByTransaction(oldTrans);
-		if (!oldCompany.equals(newCompany) || !oldCompany.getId().equals(newCompany.getId())) {
-			oldCompany.removeTransaction(oldTrans);
-			companyService.saveCompany(oldCompany);
-
-			editTrans.getTrans().setCreatedBy(oldTrans.getCreatedBy());
-			newCompany.addTransaction(editTrans.getTrans());
-			companyService.saveCompany(newCompany);
-			needToDelete = true;
+		if (oldCompany == null) {
+			oldCompany = companyService.findCompanyByTransactionInBuyer(oldTrans);
 		}
-		Contract newContract = editTrans.getContract();
+		Company newCompany = editTrans.getCompany();
+
 		Contract oldContract = contractService.findContractByTransaction(oldTrans);
-		if ((oldContract == null && newContract != null) || !oldContract.equals(newContract)
-				|| !oldContract.getId().equals(newContract.getId())) {
-			if (oldContract != null) {
-				oldContract.removeTransaction(oldTrans);
-				contractService.saveContract(oldContract);
-				transService.deleteTransactionById(oldTrans.getId());
-			}
+		Contract newContract = editTrans.getContract();
 
-			editTrans.getTrans().setCreatedBy(oldTrans.getCreatedBy());
-			newContract.addTransaction(editTrans.getTrans());
-			contractService.saveContract(newContract);
-			needToDelete = true;
+		boolean oldContractNull = false;
+		if (oldContract == null) {
+			oldContractNull = true;
 		}
-		if (needToDelete) {
-			transService.deleteTransactionById(oldTrans.getId());
+		boolean newContractNull = false;
+
+		if (newContract == null) {
+			newContractNull = true;
+		}
+
+		if (!oldCompany.equals(newCompany)) {
+			companyChanged = true;
+		}
+
+		if ((oldContractNull && !newContractNull) || (!oldContract.equals(newContract))) {
+			contractChanged = true;
+		}
+
+		// Actual saves
+		if (companyChanged == true && contractChanged == true) {
+			// oldCompany no contract -> newCompany contract
+			if (oldContractNull == true && newContractNull == false) {
+				oldCompany.removeTransaction(oldTrans);
+				companyService.updateCompany(oldCompany.getId(), oldCompany);
+				List<Buyer> newCompanyBuyers = (List<Buyer>) newCompany.getBuyers();
+				for (Buyer b : newCompanyBuyers) {
+					for (Contract c : b.getContracts()) {
+						if (c.getId().equals(newContract.getId())) {
+							c.addTransaction(newTrans);
+						}
+					}
+				}
+				companyService.updateCompany(newCompany.getId(), newCompany);
+				// oldCompany contract-> newCompany no contract
+			} else if (oldContractNull == false && newContractNull == true) {
+				List<Buyer> oldCompanyBuyers = (List<Buyer>) oldCompany.getBuyers();
+				for (Buyer b : oldCompanyBuyers) {
+					for (Contract c : b.getContracts()) {
+						c.removeTransaction(oldTrans);
+					}
+				}
+				companyService.updateCompany(oldCompany.getId(), oldCompany);
+				newCompany.addTransaction(newTrans);
+			}
+		} else if (companyChanged == false && contractChanged == true) {
+			if (oldContractNull == true && newContractNull == false) {
+				oldCompany.removeTransaction(oldTrans);
+				newContract.addTransaction(newTrans);
+				companyService.updateCompany(oldCompany.getId(), oldCompany);
+				contractService.updateContract(newContract.getId(), newContract);
+			} else if (oldContractNull == false && newContractNull == true) {
+				oldContract.removeTransaction(oldTrans);
+				newCompany.addTransaction(newTrans);
+			}
+		} else if (companyChanged == false && contractChanged == false) {
+			if (oldContractNull == true) {
+				oldCompany.removeTransaction(oldTrans);
+				oldCompany.addTransaction(newTrans);
+				companyService.updateCompany(oldCompany.getId(), oldCompany);
+			} else {
+				oldContract.removeTransaction(oldTrans);
+				oldContract.addTransaction(newTrans);
+				contractService.updateContract(oldContract.getId(), oldContract);
+			}
 		}
 		model.addAttribute("transactions",
 				transService.findTransactionsByUsername(oldTrans.getCreatedBy().getUsername()));
