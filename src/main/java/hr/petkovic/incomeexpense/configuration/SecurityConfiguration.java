@@ -20,15 +20,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public PasswordEncoder getPasswordEncoder() {
-		return new BCryptPasswordEncoder();
+		return new PasswordEnconderTest();
 	}
 
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(getPasswordEncoder())
-			.usersByUsernameQuery("select username, password, enabled from users where username=?")
-			.authoritiesByUsernameQuery("select username, roles.name as authority "
-					+ "from users join user_roles on users.id=user_roles.user_id "
-					+ "join roles on roles.id=user_roles.role_id where username=?");
+				.usersByUsernameQuery("select username, password, enabled from users where username=?")
+				.authoritiesByUsernameQuery("select username, roles.name as authority "
+						+ "from users join user_roles on users.id=user_roles.user_id "
+						+ "join roles on roles.id=user_roles.role_id where username=?");
+	}
+
+	public class PasswordEnconderTest implements PasswordEncoder {
+		@Override
+		public String encode(CharSequence charSequence) {
+			return charSequence.toString();
+		}
+
+		@Override
+		public boolean matches(CharSequence charSequence, String s) {
+			return charSequence.toString().equals(s);
+		}
 	}
 }

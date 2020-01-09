@@ -41,8 +41,8 @@
 					<tr th:each="contract : ${contracts}">
 						<td th:text="${contract.id}"></td>
 						<td th:text="${contract.code}"></td>
-						<td th:text="${#numbers.formatDecimal(contract.agreedAmount, 1, 'COMMA', 2, 'POINT')}"></td>
-						<td th:text="${#numbers.formatDecimal(contract.currentAmount, 1, 'COMMA', 2, 'POINT')}"></td>
+						<td th:text="${#numbers.formatDecimal(contract.agreedAmount, 1, 'COMMA', 2, 'POINT')} + ' $'"></td>
+						<td th:text="${#numbers.formatDecimal(contract.currentAmount, 1, 'COMMA', 2, 'POINT') + ' $'}"></td>
 <!-- 						<td th:text="${contract.agreedCurrency.name}"></td> -->
 						<td><a th:href="@{'/trans/contracts/' + ${contract.id}}">Transactions
 						</a></td>

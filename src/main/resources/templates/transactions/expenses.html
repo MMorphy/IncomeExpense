@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Expense adding</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</head>
+<body>
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<form method="POST" th:object="${addTrans}" th:action="@{/expenses/add/}">
+		<div class="container-fluid">
+			<div class="row">
+
+				<div class="form-group col-lg-5">
+					<label for="amount" class="control-label">Amount:</label> <input
+						type="number" class="form-control" id="amount"
+						th:field="*{amount}" required="required" step="0.01">
+				</div>
+				<div class="form-group col-lg-5">
+					<label>Transaction type:</label> <select th:field="*{type}"
+						class="form-control" required="required">
+						<option th:each="type : ${types}" th:value="${type.id}"
+							th:text="${type.subtypeOne}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-lg-12">
+					<label for="description" class="control-label">Description:</label>
+					<input type="text" class="form-control" id="description"
+						th:field="*{description}">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-lg-4">
+				<input type="submit" th:value="Submit" name="action"> <input
+					type="button" onclick="history.go(-1);" value="Back">
+			</div>
+		</div>
+	</form>
+
+
+</body>
+</html>

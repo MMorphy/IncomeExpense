@@ -16,6 +16,7 @@ import hr.petkovic.incomeexpense.DTO.FinancialTransactionDTO;
 import hr.petkovic.incomeexpense.entity.Buyer;
 import hr.petkovic.incomeexpense.entity.Company;
 import hr.petkovic.incomeexpense.entity.Contract;
+import hr.petkovic.incomeexpense.entity.Currency;
 import hr.petkovic.incomeexpense.entity.FinancialTransaction;
 import hr.petkovic.incomeexpense.entity.User;
 import hr.petkovic.incomeexpense.service.BuyerService;
@@ -83,7 +84,6 @@ public class TransactionController {
 	public String getTransactionAdding(Model model) {
 		model.addAttribute("addTrans", new FinancialTransactionDTO());
 		model.addAttribute("companies", companyService.findAllCompanies());
-		model.addAttribute("currencies", currencyService.findAllCurrencies());
 		model.addAttribute("types", transService.findAllTransactionTypes());
 		model.addAttribute("contracts", transService.findAllContracts());
 		return "transactions/transactionsAdd";
@@ -94,6 +94,12 @@ public class TransactionController {
 		User currentUser = userService
 				.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		FinancialTransaction trans = addTrans.getTrans();
+		Currency dollars = currencyService.findCurrencyByNameCode("USD");
+		if (dollars == null) {
+			return "redirect:/trans/" + currentUser.getUsername();
+		} else {
+			addTrans.getTrans().setCurrency(dollars);
+		}
 		trans.setCreateDate(new Date());
 		trans.setCreatedBy(currentUser);
 		Company comp = addTrans.getCompany();
@@ -106,9 +112,8 @@ public class TransactionController {
 			buyer.addContract(cont);
 		}
 		companyService.saveCompany(comp);
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		model.addAttribute("transactions", transService.findTransactionsByUsername(username));
-		return "redirect:/trans/" + username;
+		model.addAttribute("transactions", transService.findTransactionsByUsername(currentUser.getUsername()));
+		return "redirect:/trans/" + currentUser.getUsername();
 	}
 
 	@GetMapping("/edit/{id}")
@@ -122,7 +127,6 @@ public class TransactionController {
 
 		model.addAttribute("editTrans", editTrans);
 		model.addAttribute("companies", companyService.findAllCompanies());
-		model.addAttribute("currencies", currencyService.findAllCurrencies());
 		model.addAttribute("types", transService.findAllTransactionTypes());
 		model.addAttribute("contracts", transService.findAllContracts());
 		return "transactions/transactionsEdit";
@@ -134,8 +138,14 @@ public class TransactionController {
 
 		boolean companyChanged = false;
 		boolean contractChanged = false;
-
 		FinancialTransaction oldTrans = transService.findTransactionById(id);
+
+		Currency dollars = currencyService.findCurrencyByNameCode("USD");
+		if (dollars == null) {
+			return "redirect:/trans/" + oldTrans.getCreatedBy().getUsername();
+		} else {
+			editTrans.getTrans().setCurrency(dollars);
+		}
 		FinancialTransaction newTrans = editTrans.getTrans();
 
 		Company oldCompany = companyService.findCompanyByTransaction(oldTrans);

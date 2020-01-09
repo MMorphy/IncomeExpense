@@ -43,9 +43,12 @@
 							<td th:text="${DTO.fromDate}"></td>
 							<td th:text="${DTO.toDate}"></td>
 							<td th:text="${DTO.type.name}"></td>
-							<td th:text="${#numbers.formatDecimal(DTO.plannedAmount, 0, 'COMMA', 2, 'POINT')}"></td>
-							<td th:text="${DTO.achievedAmount != null} ?  ${#numbers.formatDecimal(DTO.achievedAmount, 1, 'COMMA', 2, 'POINT')} : '0.00'"></td>
-							<td th:text="${DTO.achievedAmount != null} ?  ${#numbers.formatDecimal(DTO.achievedAmount / DTO.plannedAmount * 100, 1, 'COMMA', 2, 'POINT')} + '%' : '0.00%'"></td>
+							<td
+								th:text="${#numbers.formatDecimal(DTO.plannedAmount, 0, 'COMMA', 2, 'POINT') + ' $'}"></td>
+							<td
+								th:text="${DTO.achievedAmount != null} ?  ${#numbers.formatDecimal(DTO.achievedAmount, 1, 'COMMA', 2, 'POINT') + ' $'} : '0.00 $'"></td>
+							<td
+								th:text="${DTO.achievedAmount != null} ?  ${#numbers.formatDecimal(DTO.achievedAmount / DTO.plannedAmount * 100, 1, 'COMMA', 2, 'POINT')} + '%' : '0.00%'"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -72,44 +75,47 @@
 							<td th:text="${DTO.fromDate}"></td>
 							<td th:text="${DTO.toDate}"></td>
 							<td th:text="${DTO.type.name + '/' + DTO.type.subtypeOne}"></td>
-							<td th:text="${#numbers.formatDecimal(DTO.plannedAmount, 0, 'COMMA', 2, 'POINT')}"></td>
-							<td th:text="${DTO.achievedAmount != null} ?  ${#numbers.formatDecimal(DTO.achievedAmount, 1, 'COMMA', 2, 'POINT')} : '0.00'"></td>
-							<td th:text="${DTO.achievedAmount != null} ?  ${#numbers.formatDecimal(DTO.achievedAmount / DTO.plannedAmount * 100, 1, 'COMMA', 2, 'POINT')} + '%' : '0.00%'"></td>
+							<td
+								th:text="${#numbers.formatDecimal(DTO.plannedAmount, 0, 'COMMA', 2, 'POINT') + ' $'}"></td>
+							<td
+								th:text="${DTO.achievedAmount != null} ?  ${#numbers.formatDecimal(DTO.achievedAmount, 1, 'COMMA', 2, 'POINT')+ ' $'} : '0.00 $'"></td>
+							<td
+								th:text="${DTO.achievedAmount != null} ?  ${#numbers.formatDecimal(DTO.achievedAmount / DTO.plannedAmount * 100, 1, 'COMMA', 2, 'POINT')} + '%' : '0.00%'"></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
-		
-		
-<!-- 		<div class="col-md-12"> -->
-<!-- 			<h2 class="col-md-3">Income and Expenses Second Subtype</h2> -->
-<!-- 			<div class="col-md-12"> -->
 
-<!-- 				<table class="table" id="lvl2Table"> -->
-<!-- 					<thead> -->
-<!-- 						<tr> -->
-<!-- 							<th>From</th> -->
-<!-- 							<th>To</th> -->
-<!-- 							<th>Type</th> -->
-<!-- 							<th>Amount planned</th> -->
-<!-- 							<th>Amount achieved</th> -->
-<!-- 							<th>Percentage</th> -->
-<!-- 						</tr> -->
-<!-- 					</thead> -->
-<!-- 					<tbody> -->
-<!-- 						<tr th:each="DTO : ${pvaLvl2DTOs}"> -->
-<!-- 							<td th:text="${DTO.fromDate}"></td> -->
-<!-- 							<td th:text="${DTO.toDate}"></td> -->
-<!-- 							<td th:text="${DTO.type.name + '/' + DTO.type.subtypeOne + '/' + DTO.type.subtypeTwo}"></td> -->
-<!-- 							<td th:text="${DTO.plannedAmount}"></td> -->
-<!-- 							<td th:text="${DTO.achievedAmount != null} ?  ${DTO.achievedAmount} : '0.00'"></td> -->
-<!-- 							<td th:text="${DTO.achievedAmount != null} ?  ${DTO.achievedAmount / DTO.plannedAmount * 100} + '%' : '0.0%'"></td> -->
-<!-- 						</tr> -->
-<!-- 					</tbody> -->
-<!-- 				</table> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
+
+		<!-- 		<div class="col-md-12"> -->
+		<!-- 			<h2 class="col-md-3">Income and Expenses Second Subtype</h2> -->
+		<!-- 			<div class="col-md-12"> -->
+
+		<!-- 				<table class="table" id="lvl2Table"> -->
+		<!-- 					<thead> -->
+		<!-- 						<tr> -->
+		<!-- 							<th>From</th> -->
+		<!-- 							<th>To</th> -->
+		<!-- 							<th>Type</th> -->
+		<!-- 							<th>Amount planned</th> -->
+		<!-- 							<th>Amount achieved</th> -->
+		<!-- 							<th>Percentage</th> -->
+		<!-- 						</tr> -->
+		<!-- 					</thead> -->
+		<!-- 					<tbody> -->
+		<!-- 						<tr th:each="DTO : ${pvaLvl2DTOs}"> -->
+		<!-- 							<td th:text="${DTO.fromDate}"></td> -->
+		<!-- 							<td th:text="${DTO.toDate}"></td> -->
+		<!-- 							<td th:text="${DTO.type.name + '/' + DTO.type.subtypeOne + '/' + DTO.type.subtypeTwo}"></td> -->
+		<!-- 							<td th:text="${DTO.plannedAmount}"></td> -->
+		<!-- 							<td th:text="${DTO.achievedAmount != null} ?  ${DTO.achievedAmount} : '0.00'"></td> -->
+		<!-- 							<td th:text="${DTO.achievedAmount != null} ?  ${DTO.achievedAmount / DTO.plannedAmount * 100} + '%' : '0.0%'"></td> -->
+		<!-- 						</tr> -->
+		<!-- 					</tbody> -->
+		<!-- 				</table> -->
+		<!-- 			</div> -->
+		<!-- 		</div> -->
 	</div>
 
 

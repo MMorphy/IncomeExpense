@@ -78,4 +78,13 @@ public class CompanyService {
 		} else
 			return null;
 	}
+
+	//Always returns first
+	public Company findDefaultCompany() {
+		List<Company> comps = companyRepo.findByNameNot("Banka");
+		if (comps == null || comps.size() == 0) {
+			return null;
+		} else
+			return comps.get(0);
+	}
 }

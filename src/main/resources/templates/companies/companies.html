@@ -42,7 +42,7 @@
 						<td th:text="${company.id}"></td>
 						<td th:text="${company.name}"></td>
 						<td th:text="${company.location}"></td>
-						<td th:text="${#numbers.formatDecimal(company.currentCash, 1, 'COMMA', 2, 'POINT')}"></td>
+						<td th:text="${#numbers.formatDecimal(company.currentCash, 1, 'COMMA', 2, 'POINT')} + ' $'"></td>
 						<td><a th:href="@{'/trans/companies/' + ${company.id}}">Transactions
 						</a></td>
 						<td><a th:href="@{'/buyer/' + ${company.id}}">Buyers

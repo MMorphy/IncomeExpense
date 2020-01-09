@@ -28,12 +28,16 @@
 					<li><a
 						th:href="@{'/trans/' + ${#authentication.getPrincipal().getUsername()}}">My
 							Transactions</a></li>
-					<li><a th:href="@{/trans/}">All Transactions</a></li>
+					<li sec:authorize="hasRole('ROLE_ADMIN')"><a
+						th:href="@{/trans/}">All Transactions</a></li>
 					<li><a th:href="@{/buyer/}">Buyers</a></li>
 					<li><a th:href="@{/contracts/}">Contracts</a></li>
-					<li><a th:href="@{/companies/}">Companies</a></li>
-					<li><a th:href="@{/plans/}">Plans</a></li>
-					<li><a th:href="@{/administration/}">Administration</a></li>
+					<li sec:authorize="hasRole('ROLE_ADMIN')"><a
+						th:href="@{/companies/}">Companies</a></li>
+					<li sec:authorize="hasRole('ROLE_ADMIN')"><a
+						th:href="@{/plans/}">Plans</a></li>
+					<li sec:authorize="hasRole('ROLE_ADMIN')"><a
+						th:href="@{/administration/}">Administration</a></li>
 					<li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')"><a
 						class="dropdown-toggle" data-toggle="dropdown" href="#">Statistics
 							<span class="caret"></span>
@@ -41,8 +45,7 @@
 						<ul class="dropdown-menu">
 							<li><a th:href="@{/statistics/planned/}">
 									Planned/Achieved</a></li>
-							<li><a th:href="@{/statistics/time/}">
-									Time comparison</a></li>
+							<li><a th:href="@{/statistics/time/}"> Time comparison</a></li>
 
 						</ul></li>
 				</ul>
