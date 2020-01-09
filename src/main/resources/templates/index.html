@@ -1,13 +1,63 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="ISO-8859-1">
 <title>Income/Expense Home</title>
 <th:block th:include="fragments/generalFragments.html :: headerfiles">
-        </th:block>
+</th:block>
 </head>
 <body>
-    <div th:replace="fragments/generalFragments.html :: navbar"></div>
+	    
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<div class="row space-16">&nbsp;</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="thumbnail">
+						<div class="caption text-center"
+							onclick="location.href='https://flow.microsoft.com/en-us/connectors/shared_slack/slack/'">
+							<div class="position-relative">
+								<img src="https://az818438.vo.msecnd.net/icons/slack.png"
+									style="width: 72px; height: 72px;" />
+							</div>
+							<h3 id="thumbnail-label">
+								<a
+									href="https://flow.microsoft.com/en-us/connectors/shared_slack/slack/"
+									target="_blank">IN</a>
+							</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2">&nbsp;</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="row space-16">&nbsp;</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="thumbnail">
+						<div class="caption text-center"
+							onclick="location.href='https://flow.microsoft.com/en-us/connectors/shared_slack/slack/'">
+							<div class="position-relative">
+								<img src="https://az818438.vo.msecnd.net/icons/slack.png"
+									style="width: 72px; height: 72px;" />
+							</div>
+							<h3 id="thumbnail-label">
+								<a
+									href="https://flow.microsoft.com/en-us/connectors/shared_slack/slack/"
+									target="_blank">OUT</a>
+							</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2">&nbsp;</div>
+		</div>
+	</div>
+
 </body>
 </html>

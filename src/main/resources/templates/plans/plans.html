@@ -43,7 +43,7 @@
 						<td th:text="${plan.id}"></td>
 						<td th:text="${plan.fromDate}"></td>
 						<td th:text="${plan.toDate}"></td>
-						<td th:text="${plan.amount}"></td>
+						<td th:text="${#numbers.formatDecimal(plan.amount, 0, 'COMMA', 2, 'POINT')}"></td>
 						<td th:text="${plan.type.name}"></td>
 						<td th:text="${plan.type.subtypeOne}"></td>
 						<td th:text="${plan.type.subtypeTwo}"></td>

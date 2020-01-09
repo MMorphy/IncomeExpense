@@ -42,8 +42,8 @@
 						<tr th:each="DTO : ${incomeYearMonth}">
 							<td th:text="${DTO.year}"></td>
 							<td th:text="${DTO.month}"></td>
-							<td th:text="${DTO.sum}"></td>
-							<td th:text="${DTO.difference}"></td>
+							<td th:text="${#numbers.formatDecimal(DTO.sum, 1, 'COMMA', 2, 'POINT')}"></td>
+							<td th:text="${#numbers.formatDecimal(DTO.difference, 1, 'COMMA', 2, 'POINT')}"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -67,8 +67,8 @@
 						<tr th:each="DTO : ${expensesYearMonth}">
 							<td th:text="${DTO.year}"></td>
 							<td th:text="${DTO.month}"></td>
-							<td th:text="${DTO.sum}"></td>
-							<td th:text="${DTO.difference}"></td>
+							<td th:text="${#numbers.formatDecimal(DTO.sum, 1, 'COMMA', 2, 'POINT')}"></td>
+							<td th:text="${#numbers.formatDecimal(DTO.difference, 1, 'COMMA', 2, 'POINT')}"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -90,8 +90,8 @@
 					<tbody>
 						<tr th:each="DTO : ${incomeYear}">
 							<td th:text="${DTO.year}"></td>
-							<td th:text="${DTO.sum}"></td>
-							<td th:text="${DTO.difference}"></td>
+							<td th:text="${#numbers.formatDecimal(DTO.sum, 1, 'COMMA', 2, 'POINT')}"></td>
+							<td th:text="${#numbers.formatDecimal(DTO.difference, 1, 'COMMA', 2, 'POINT')}"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -112,8 +112,8 @@
 					<tbody>
 						<tr th:each="DTO : ${expensesYear}">
 							<td th:text="${DTO.year}"></td>
-							<td th:text="${DTO.sum}"></td>
-							<td th:text="${DTO.difference}"></td>
+							<td th:text="${#numbers.formatDecimal(DTO.sum, 1, 'COMMA', 2, 'POINT')}"></td>
+							<td th:text="${#numbers.formatDecimal(DTO.difference, 1, 'COMMA', 2, 'POINT')}"></td>
 						</tr>
 					</tbody>
 				</table>

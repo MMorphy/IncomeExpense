@@ -45,7 +45,7 @@
 						<td th:text="${trans.id}"></td>
 						<td th:text="${trans.createDate}"></td>
 						<td th:text="${trans.createdBy.username}"></td>
-						<td th:text="${trans.amount}"></td>
+						<td th:text="${#numbers.formatDecimal(trans.amount, 0, 'COMMA', 2, 'POINT')}"></td>
 						<td th:text="${trans.currency.name}"></td>
 						<td th:text="${trans.type.name}"></td>
 						<td th:text="${trans.type.subtypeOne}"></td>
