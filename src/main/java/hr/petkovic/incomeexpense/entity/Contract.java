@@ -28,10 +28,10 @@ public class Contract {
 
 	@Column(nullable = false)
 	private Float agreedAmount;
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "currency_id")
-	private Currency agreedCurrency;
+//
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "currency_id")
+//	private Currency agreedCurrency;
 
 	private Float currentAmount = new Float(0F);
 
@@ -39,13 +39,12 @@ public class Contract {
 	@JoinColumn(name = "contract_id")
 	private Collection<FinancialTransaction> transactions;
 
-	public Contract(Long id, String code, Float agreedAmount, Currency agreedCurrency, Float currentAmount,
+	public Contract(Long id, String code, Float agreedAmount, Float currentAmount,
 			Collection<FinancialTransaction> transactions) {
 		super();
 		this.id = id;
 		this.code = code;
 		this.agreedAmount = agreedAmount;
-		this.agreedCurrency = agreedCurrency;
 		this.currentAmount = currentAmount;
 		this.transactions = transactions;
 	}
@@ -76,14 +75,6 @@ public class Contract {
 
 	public void setAgreedAmount(Float agreedAmount) {
 		this.agreedAmount = agreedAmount;
-	}
-
-	public Currency getAgreedCurrency() {
-		return agreedCurrency;
-	}
-
-	public void setAgreedCurrency(Currency agreedCurrency) {
-		this.agreedCurrency = agreedCurrency;
 	}
 
 	public Float getCurrentAmount() {

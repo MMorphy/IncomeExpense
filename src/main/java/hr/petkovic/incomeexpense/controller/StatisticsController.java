@@ -50,12 +50,12 @@ public class StatisticsController {
 		}
 		model.addAttribute("pvaLvl1DTOs", toShowOne);
 
-		List<PlannedVsAchievedDTO> toShowTwo = new ArrayList<>();
-		aggs = planService.getAllPlansLevel2();
-		for (PlannedAggDTO agg : aggs) {
-			toShowTwo.add(new PlannedVsAchievedDTO(agg, transService.findSumForTypeLvl2(agg)));
-		}
-		model.addAttribute("pvaLvl2DTOs", toShowTwo);
+//		List<PlannedVsAchievedDTO> toShowTwo = new ArrayList<>();
+//		aggs = planService.getAllPlansLevel2();
+//		for (PlannedAggDTO agg : aggs) {
+//			toShowTwo.add(new PlannedVsAchievedDTO(agg, transService.findSumForTypeLvl2(agg)));
+//		}
+//		model.addAttribute("pvaLvl2DTOs", toShowTwo);
 		return "statistics/plansVsTransactions";
 	}
 

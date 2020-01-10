@@ -62,7 +62,7 @@ public class PlanService {
 		return planRepo.sumAmountByTransactionDateLevelOne();
 	}
 
-	public List<PlannedAggDTO> getAllPlansLevel2() {
-		return planRepo.sumAmountByTransactionDateLevelTwo();
-	}
+//	public List<PlannedAggDTO> getAllPlansLevel2() {
+//		return planRepo.sumAmountByTransactionDateLevelTwo();
+//	}
 }

@@ -33,10 +33,10 @@ public class FinancialTransaction {
 	@Column(nullable = false)
 	private Float amount;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@Fetch(value = FetchMode.JOIN)
-	@JoinColumn(name = "currency_id")
-	private Currency currency;
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@Fetch(value = FetchMode.JOIN)
+//	@JoinColumn(name = "currency_id")
+//	private Currency currency;
 
 	@Column(nullable = true)
 	private String description = "";
@@ -51,13 +51,13 @@ public class FinancialTransaction {
 	@JoinColumn(name = "user_id")
 	private User createdBy;
 
-	public FinancialTransaction(Long id, Date createDate, Float amount, Currency currency, String description,
+	public FinancialTransaction(Long id, Date createDate, Float amount, String description,
 			TransactionType type, User createdBy) {
 		super();
 		this.id = id;
 		this.createDate = createDate;
 		this.amount = amount;
-		this.currency = currency;
+//		this.currency = currency;
 		this.description = description;
 		this.type = type;
 		this.createdBy = createdBy;
@@ -90,13 +90,13 @@ public class FinancialTransaction {
 		this.amount = amount;
 	}
 
-	public Currency getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(Currency currency) {
-		this.currency = currency;
-	}
+//	public Currency getCurrency() {
+//		return currency;
+//	}
+//
+//	public void setCurrency(Currency currency) {
+//		this.currency = currency;
+//	}
 
 	public String getDescription() {
 		return description;

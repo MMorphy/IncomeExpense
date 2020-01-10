@@ -36,8 +36,15 @@
 						th:href="@{/companies/}">Companies</a></li>
 					<li sec:authorize="hasRole('ROLE_ADMIN')"><a
 						th:href="@{/plans/}">Plans</a></li>
-					<li sec:authorize="hasRole('ROLE_ADMIN')"><a
-						th:href="@{/administration/}">Administration</a></li>
+					<li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')"><a
+						class="dropdown-toggle" data-toggle="dropdown" href="#">Administration
+							<span class="caret"></span>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a th:href="@{/admin/user/}"> User administration</a></li>
+							<li><a th:href="@{/admin/type/}"> Transaction types</a></li>
+
+						</ul></li>
 					<li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')"><a
 						class="dropdown-toggle" data-toggle="dropdown" href="#">Statistics
 							<span class="caret"></span>

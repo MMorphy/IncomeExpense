@@ -12,5 +12,5 @@ public interface TransactionTypeRepository extends JpaRepository<TransactionType
 
 	List<TransactionType> findAllByNameAndSubtypeOne(String name, String subtypeOne);
 
-	List<TransactionType> findAllByNameAndSubtypeOneAndSubtypeTwo(String name, String subtypeOne, String subtypeTwo);
+//	List<TransactionType> findAllByNameAndSubtypeOneAndSubtypeTwo(String name, String subtypeOne, String subtypeTwo);
 }

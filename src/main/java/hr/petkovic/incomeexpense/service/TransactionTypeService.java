@@ -43,9 +43,13 @@ public class TransactionTypeService {
 		return typeRepo.findAllByNameAndSubtypeOne(name, subtypeOne);
 	}
 
-	public List<TransactionType> findAllTransactionTypesByNameAndSubtypes(String name, String subtypeOne,
-			String subtypeTwo) {
-		return typeRepo.findAllByNameAndSubtypeOneAndSubtypeTwo(name, subtypeOne, subtypeTwo);
+//	public List<TransactionType> findAllTransactionTypesByNameAndSubtypes(String name, String subtypeOne,
+//			String subtypeTwo) {
+//		return typeRepo.findAllByNameAndSubtypeOneAndSubtypeTwo(name, subtypeOne, subtypeTwo);
+//	}
+
+	public TransactionType saveTransactionType(TransactionType t) {
+		return typeRepo.save(t);
 	}
 
 	public TransactionType updateTransactionType(Long id, TransactionType type) {
@@ -54,7 +58,6 @@ public class TransactionTypeService {
 			TransactionType t = optType.get();
 			t.setName(type.getName());
 			t.setSubtypeOne(type.getSubtypeOne());
-			t.setSubtypeTwo(type.getSubtypeTwo());
 			return typeRepo.save(t);
 		} else {
 			return typeRepo.save(type);

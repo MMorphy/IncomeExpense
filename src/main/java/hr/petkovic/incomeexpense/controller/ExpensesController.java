@@ -59,12 +59,12 @@ public class ExpensesController {
 	public String addTransaction(FinancialTransaction addTrans, Model model) {
 		User currentUser = userService
 				.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-		Currency dollars = currService.findCurrencyByNameCode("USD");
-		if (dollars == null) {
-			return "redirect:/";
-		} else {
-			addTrans.setCurrency(dollars);
-		}
+//		Currency dollars = currService.findCurrencyByNameCode("USD");
+//		if (dollars == null) {
+//			return "redirect:/";
+//		} else {
+//			addTrans.setCurrency(dollars);
+//		}
 		Company defaultCompany = compService.findDefaultCompany();
 		if (defaultCompany == null) {
 			return "redirect:/";

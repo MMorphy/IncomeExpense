@@ -48,7 +48,6 @@ public class ContractService {
 		if (optContract.isPresent()) {
 			Contract con = optContract.get();
 			con.setAgreedAmount(contract.getAgreedAmount());
-			con.setAgreedCurrency(contract.getAgreedCurrency());
 			con.setCode(contract.getCode());
 			con.setCurrentAmount(contract.getCurrentAmount());
 			con.setTransactions(contract.getTransactions());

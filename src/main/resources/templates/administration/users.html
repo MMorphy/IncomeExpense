@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Users</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</th:block>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>
+</head>
+<body>
+	   
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<script>
+		$(document).ready(function() {
+			$('#userTable').DataTable();
+		});
+	</script>
+
+	<div class="col-md-12">
+		<div class="col-md-12">
+			<h1 class="col-md-3">Users</h1>
+		</div>
+		<div class="col-md-12">
+			<table class="table" id="userTable">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Username</th>
+						<th>Password</th>
+						<th>Tasks</th>
+						<th>Remove</th>
+						<th>Edit</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${users}">
+						<td th:text="${user.id}"></td>
+						<td th:text="${user.username}"></td>
+						<td th:text="${user.password}"></td>
+						<td><a th:href="@{'/tasks/' + ${user.id}}">Tasks
+						</a></td>
+						
+						<td>
+							<form th:action="@{'/admin/user/disable/' + ${user.id}}"
+								method="post">
+								<button>Remove</button>
+							</form>
+						</td>
+						<td>
+							<form th:action="@{'/admin/user/edit/' + ${user.id}}"
+								method="get">
+								<button>Edit</button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+		<form th:action="@{/admin/user/add}" method="get">
+			<button>Add new user</button>
+		</form>
+	</div>
+
+
+</body>
+</html>

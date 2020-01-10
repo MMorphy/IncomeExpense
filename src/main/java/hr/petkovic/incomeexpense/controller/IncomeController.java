@@ -61,11 +61,11 @@ public class IncomeController {
 		User currentUser = userService
 				.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		Currency dollars = currService.findCurrencyByNameCode("USD");
-		if (dollars == null) {
-			return "redirect:/";
-		} else {
-			addTrans.setCurrency(dollars);
-		}
+//		if (dollars == null) {
+//			return "redirect:/";
+//		} else {
+//			addTrans.setCurrency(dollars);
+//		}
 		Company defaultCompany = compService.findDefaultCompany();
 		if (defaultCompany == null) {
 			return "redirect:/";

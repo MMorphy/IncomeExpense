@@ -43,8 +43,8 @@ public class DatabaseConfiguration {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost:3306/erp");
-		dataSource.setUsername("administrator");
-		dataSource.setPassword("administrator");
+		dataSource.setUsername("admin");
+		dataSource.setPassword("admin");
 		return dataSource;
 	}
 

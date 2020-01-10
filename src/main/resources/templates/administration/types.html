@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Financial transaction types</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</th:block>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>
+</head>
+<body>
+	   
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<script>
+		$(document).ready(function() {
+			$('#typeTable').DataTable();
+		});
+	</script>
+
+	<div class="col-md-12">
+		<div class="col-md-12">
+			<h1 class="col-md-3">Financial transaction types</h1>
+		</div>
+		<div class="col-md-12">
+			<table class="table" id="typeTable">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Type</th>
+						<th>Subtype</th>
+						<th>Remove</th>
+						<th>Edit</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="type : ${types}">
+						<td th:text="${type.id}"></td>
+						<td th:text="${type.name}"></td>
+						<td th:text="${type.subtypeOne}"></td>
+
+						<td>
+							<form th:action="@{'/admin/type/delete/' + ${type.id}}"
+								method="post">
+								<button>Remove</button>
+							</form>
+						</td>
+						<td>
+							<form th:action="@{'/admin/type/edit/' + ${type.id}}"
+								method="get">
+								<button>Edit</button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+		<form th:action="@{/admin/type/add}" method="get">
+			<button>Add new financial transaction type</button>
+		</form>
+	</div>
+
+
+</body>
+</html>

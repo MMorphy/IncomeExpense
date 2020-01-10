@@ -21,15 +21,11 @@ public class TransactionType {
 	@Column(nullable = false)
 	private String subtypeOne;
 
-	@Column(nullable = true)
-	private String subtypeTwo;
-
-	public TransactionType(Long id, String name, String subtypeOne, String subtypeTwo) {
+	public TransactionType(Long id, String name, String subtypeOne) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.subtypeOne = subtypeOne;
-		this.subtypeTwo = subtypeTwo;
 	}
 
 	public TransactionType() {
@@ -59,12 +55,5 @@ public class TransactionType {
 		this.subtypeOne = subtypeOne;
 	}
 
-	public String getSubtypeTwo() {
-		return subtypeTwo;
-	}
-
-	public void setSubtypeTwo(String subtypeTwo) {
-		this.subtypeTwo = subtypeTwo;
-	}
 
 }

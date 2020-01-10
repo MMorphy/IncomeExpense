@@ -108,7 +108,7 @@ public class TransactionService {
 		if (optTrans.isPresent()) {
 			FinancialTransaction trans = optTrans.get();
 			trans.setAmount(transaction.getAmount());
-			trans.setCurrency(transaction.getCurrency());
+//			trans.setCurrency(transaction.getCurrency());
 			trans.setDescription(transaction.getDescription());
 			trans.setType(transaction.getType());
 			return transRepo.save(trans);
@@ -150,21 +150,21 @@ public class TransactionService {
 		}
 	}
 
-	public Double findSumForTypeLvl2(PlannedAggDTO agg) {
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Date toDate = agg.getToDate();
-		Date fromDate = agg.getFromDate();
-		String typeName = agg.getType().getName();
-		String subtypeOne = agg.getType().getSubtypeOne();
-		String subtypeTwo = agg.getType().getSubtypeTwo();
-		Double sum = transRepo.findAllTransactionsSumByTypeLvl0AndTypeLvl1AndTypeLvl2AndInPeriod(df.format(fromDate),
-				df.format(toDate), typeName, subtypeOne, subtypeTwo);
-		if (sum != null) {
-			return sum;
-		} else {
-			return 0.0;
-		}
-	}
+//	public Double findSumForTypeLvl2(PlannedAggDTO agg) {
+//		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//		Date toDate = agg.getToDate();
+//		Date fromDate = agg.getFromDate();
+//		String typeName = agg.getType().getName();
+//		String subtypeOne = agg.getType().getSubtypeOne();
+//		String subtypeTwo = agg.getType().getSubtypeTwo();
+//		Double sum = transRepo.findAllTransactionsSumByTypeLvl0AndTypeLvl1AndTypeLvl2AndInPeriod(df.format(fromDate),
+//				df.format(toDate), typeName, subtypeOne, subtypeTwo);
+//		if (sum != null) {
+//			return sum;
+//		} else {
+//			return 0.0;
+//		}
+//	}
 
 	public List<TimeAggDTO> findIncomeTransactionsGroupedByYearAndMonth() {
 		return transRepo.findAllIncomeTransactionSumsByYearAndMonth();

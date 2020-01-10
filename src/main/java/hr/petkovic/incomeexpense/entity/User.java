@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +30,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Fetch(FetchMode.SELECT)
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private Collection<Role> roles;
@@ -110,4 +111,20 @@ public class User {
 		this.enabled = enabled;
 	}
 
+	public boolean addRole(Role role) {
+		return this.roles.add(role);
+	}
+
+	public boolean removeRole(Role role) {
+		return this.roles.remove(role);
+	}
+
+	public boolean isAdmin() {
+		for (Role role : this.roles) {
+			if (role.getName().equals("ROLE_ADMIN")) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

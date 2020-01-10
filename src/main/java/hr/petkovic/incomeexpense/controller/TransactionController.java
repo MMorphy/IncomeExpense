@@ -94,12 +94,12 @@ public class TransactionController {
 		User currentUser = userService
 				.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		FinancialTransaction trans = addTrans.getTrans();
-		Currency dollars = currencyService.findCurrencyByNameCode("USD");
-		if (dollars == null) {
-			return "redirect:/trans/" + currentUser.getUsername();
-		} else {
-			addTrans.getTrans().setCurrency(dollars);
-		}
+//		Currency dollars = currencyService.findCurrencyByNameCode("USD");
+//		if (dollars == null) {
+//			return "redirect:/trans/" + currentUser.getUsername();
+//		} else {
+//			addTrans.getTrans().setCurrency(dollars);
+//		}
 		trans.setCreateDate(new Date());
 		trans.setCreatedBy(currentUser);
 		Company comp = addTrans.getCompany();
@@ -141,11 +141,11 @@ public class TransactionController {
 		FinancialTransaction oldTrans = transService.findTransactionById(id);
 
 		Currency dollars = currencyService.findCurrencyByNameCode("USD");
-		if (dollars == null) {
-			return "redirect:/trans/" + oldTrans.getCreatedBy().getUsername();
-		} else {
-			editTrans.getTrans().setCurrency(dollars);
-		}
+//		if (dollars == null) {
+//			return "redirect:/trans/" + oldTrans.getCreatedBy().getUsername();
+//		} else {
+//			editTrans.getTrans().setCurrency(dollars);
+//		}
 		FinancialTransaction newTrans = editTrans.getTrans();
 
 		Company oldCompany = companyService.findCompanyByTransaction(oldTrans);
