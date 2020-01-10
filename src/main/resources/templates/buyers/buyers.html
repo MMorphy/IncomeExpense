@@ -45,7 +45,7 @@
 							<td th:text="${buyer.description}"></td>
 							<!-- TODO: Add titles/rows (container-fluid and row) in html to add/edit -->
 
-							<td><a th:href="@{'/contracts/' + ${buyer.id}}">Contracts
+							<td><a th:href="@{'/buyer/contracts/' + ${buyer.id}}">Contracts
 							</a></td>
 							<td>
 								<form th:action="@{'/buyer/delete/' + ${buyer.id}}"

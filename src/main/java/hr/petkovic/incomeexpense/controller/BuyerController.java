@@ -83,9 +83,16 @@ public class BuyerController {
 	}
 
 	@PostMapping("/delete/{id}")
-	public String deteleBuyer(@PathVariable("id") Long id, Model model) {
+	public String deleteBuyer(@PathVariable("id") Long id, Model model) {
 		buyerService.deleteBuyerById(id);
 		model.addAttribute("buyers", buyerService.findAllBuyers());
 		return "redirect:/buyer";
+	}
+
+	//TODO ovo ne radi dobro - pogledaj na netu kako se u thymeleafu iterira kroz listu koja se nalazi u listi nekih objekata
+	@GetMapping("/contracts/{id}")
+	public String getContractDetailsForBuyer(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("buyer", buyerService.findBuyerById(id));
+		return "buyers/contracts";
 	}
 }

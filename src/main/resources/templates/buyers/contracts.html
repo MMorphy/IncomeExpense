@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Contracts</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</th:block>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>
+</head>
+<body>
+	   
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<script>
+		$(document).ready(function() {
+			$('table').DataTable();
+		});
+	</script>
+
+	<div th:each="contract : ${buyer.contracts}" class="col-md-12">
+		<div class="col-md-12">
+			<h1 class="col-md-3" th:text="${contract.code}"></h1>
+		</div>
+		<div class="col-md-12">
+			<table class="table" id="transTable">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Created at</th>
+						<th>User</th>
+						<th>Amount</th>
+						<th>Type</th>
+						<th>Subtype 1</th>
+						<th>Description</th>
+						<th>Remove</th>
+						<th>Edit</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="trans : ${contract.transactions}">
+						<td th:text="${trans.id}"></td>
+						<td th:text="${trans.createDate}"></td>
+						<td th:text="${trans.createdBy.username}"></td>
+						<td
+							th:text="${#numbers.formatDecimal(trans.amount, 0, 'COMMA', 2, 'POINT')} + ' $'"></td>
+						<td th:text="${trans.type.name}"></td>
+						<td th:text="${trans.type.subtypeOne}"></td>
+						<td th:text="${trans.description}"></td>
+					</tr>
+				</tbody>
+			</table>
+			<div>
+				<p
+					th:text="'Agreed amount: ' + ${#numbers.formatDecimal(contract.agreedAmount, 0, 'COMMA', 2, 'POINT')} + ' $'"></p>
+				<p
+					th:text="'Current amount: ' + ${#numbers.formatDecimal(contract.currentAmount, 0, 'COMMA', 2, 'POINT')} + ' $'"></p>
+
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>
