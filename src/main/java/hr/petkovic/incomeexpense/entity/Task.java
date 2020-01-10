@@ -44,12 +44,17 @@ public class Task {
 	@Column(nullable = false)
 	private String description;
 
+	@Column(nullable = false)
+	private boolean finished = false;
+
 	public Task() {
 		this.fromUser = new User();
 		this.toUser = new User();
+		this.createdAt = new Date();
 	}
 
-	public Task(Long id, User fromUser, User toUser, Date createdAt, Date dueDate, String description) {
+	public Task(Long id, User fromUser, User toUser, Date createdAt, Date dueDate, String description,
+			boolean finished) {
 		super();
 		this.id = id;
 		this.fromUser = fromUser;
@@ -57,6 +62,7 @@ public class Task {
 		this.createdAt = createdAt;
 		this.dueDate = dueDate;
 		this.description = description;
+		this.finished = finished;
 	}
 
 	public Long getId() {
@@ -105,6 +111,14 @@ public class Task {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public boolean isFinished() {
+		return finished;
+	}
+
+	public void setFinished(boolean finished) {
+		this.finished = finished;
 	}
 
 }

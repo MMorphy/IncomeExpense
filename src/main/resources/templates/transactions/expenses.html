@@ -8,8 +8,17 @@
 </head>
 <body>
 	<div th:replace="fragments/generalFragments.html :: navbar"></div>
-
-	<form method="POST" th:object="${addTrans}" th:action="@{/expenses/add/}">
+	
+	
+	
+	<div class="col-md-12">
+		<h1 class="col-md-3">Add expense</h1>
+	</div>
+	
+	
+	
+	<form method="POST" th:object="${addTrans}"
+		th:action="@{/expenses/add/}">
 		<div class="container-fluid">
 			<div class="row">
 

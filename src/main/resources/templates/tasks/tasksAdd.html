@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Task adding</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</head>
+<body>
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<form method="POST" th:object="${addTask}" th:action="@{/tasks/add/}">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="form-group col-lg-4">
+					<label for="due">Due date:</label> <input type="date"
+						class="form-control" id="due" th:value="*{{dueDate}}"
+						th:field="*{dueDate}" required="required">
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="user">User:</label> <select th:field="*{toUser}"
+						class="form-control" required="required" id="user">
+						<option th:each="user : ${users}" th:value="${user.id}"
+							th:text="${user.username}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-lg-12">
+					<label for="description" class="control-label">Description:</label>
+					<input type="text" class="form-control" id="description"
+						th:field="*{description}" required="required">
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-lg-4">
+					<input type="submit" th:value="Submit" name="action"> <input
+						type="button" onclick="history.go(-1);" value="Back">
+				</div>
+			</div>
+		</div>
+	</form>
+
+
+</body>
+</html>

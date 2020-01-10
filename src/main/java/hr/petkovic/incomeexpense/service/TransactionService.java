@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import hr.petkovic.incomeexpense.DTO.PlannedAggDTO;
 import hr.petkovic.incomeexpense.DTO.TimeAggDTO;
-import hr.petkovic.incomeexpense.entity.Company;
 import hr.petkovic.incomeexpense.entity.Contract;
 import hr.petkovic.incomeexpense.entity.FinancialTransaction;
 import hr.petkovic.incomeexpense.entity.TransactionType;

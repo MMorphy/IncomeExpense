@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import hr.petkovic.incomeexpense.entity.Company;
-import hr.petkovic.incomeexpense.entity.Currency;
 import hr.petkovic.incomeexpense.entity.FinancialTransaction;
 import hr.petkovic.incomeexpense.entity.User;
 import hr.petkovic.incomeexpense.service.CompanyService;
@@ -52,7 +51,7 @@ public class ExpensesController {
 	public String getTransactionAdding(Model model) {
 		model.addAttribute("addTrans", new FinancialTransaction());
 		model.addAttribute("types", typeService.findAllExpensesTransactionTypes());
-		return "transactions/income";
+		return "transactions/expenses";
 	}
 
 	@PostMapping("/add")

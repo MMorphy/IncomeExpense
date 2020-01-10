@@ -12,7 +12,7 @@
 	<div th:replace="fragments/generalFragments.html :: navbar"></div>
 
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="row space-16">&nbsp;</div>
 			<div class="row">
 				<div class="col-sm-6">
@@ -33,7 +33,7 @@
 			<div class="col-md-2">&nbsp;</div>
 		</div>
 
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="row space-16">&nbsp;</div>
 			<div class="row">
 				<div class="col-sm-6">
@@ -41,9 +41,8 @@
 						<div class="caption text-center">
 							<div class="position-relative">
 								<a th:href="@{/expenses/add}" title="Expenses"><img
-									src="https://img.icons8.com/flat_round/64/000000/minus.png"
+									src="https://img.icons8.com/color/100/000000/minus.png"
 									width="100" /></a>
-							</div>
 							<h3 id="thumbnail-label">
 								<a th:href="@{/expenses/add}">OUT</a>
 							</h3>
@@ -53,6 +52,28 @@
 			</div>
 			<div class="col-md-2">&nbsp;</div>
 		</div>
+	</div>
+
+	<div class="col-md-4" sec:authorize="hasRole('ROLE_ADMIN')">
+		<div class="row space-16">&nbsp;</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="thumbnail">
+					<div class="caption text-center">
+						<div class="position-relative">
+							<a th:href="@{/tasks/add}" title="Expenses"><img
+								src="https://img.icons8.com/office/80/000000/copy-2.png"
+								width="100" /></a>
+						</div>
+						<h3 id="thumbnail-label">
+							<a th:href="@{/tasks/add}">TASK</a>
+						</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-2">&nbsp;</div>
+	</div>
 	</div>
 
 </body>
