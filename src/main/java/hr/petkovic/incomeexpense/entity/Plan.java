@@ -18,7 +18,6 @@ import javax.persistence.TemporalType;
 @Table(name = "plans")
 public class Plan {
 
-	// TODO add currency
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

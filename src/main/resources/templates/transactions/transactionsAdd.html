@@ -38,7 +38,7 @@
 					class="form-control" th:field="*{trans.type}" required="required">
 				<datalist id="types">
 					<option th:each="type : ${types}" th:value="${type.id}"
-						th:text="${type.name + '/' + type.subtypeOne + '/' + type.subtypeTwo}"></option>
+						th:text="${type.name + '/' + type.subtypeOne}"></option>
 				</datalist>
 			</div>
 			<div class="row">

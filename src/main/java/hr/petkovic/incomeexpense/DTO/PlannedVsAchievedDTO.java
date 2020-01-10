@@ -6,7 +6,6 @@ import hr.petkovic.incomeexpense.entity.TransactionType;
 
 public class PlannedVsAchievedDTO {
 
-	// TODO add currency
 	private Date fromDate;
 
 	private Date toDate;
