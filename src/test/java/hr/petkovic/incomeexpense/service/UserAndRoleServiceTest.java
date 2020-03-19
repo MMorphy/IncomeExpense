@@ -15,26 +15,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.annotation.Order;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import hr.petkovic.incomeexpense.entity.FinancialTransaction;
 import hr.petkovic.incomeexpense.entity.Role;
-import hr.petkovic.incomeexpense.entity.TransactionType;
 import hr.petkovic.incomeexpense.entity.User;
-import hr.petkovic.incomeexpense.repository.FinancialTransactionRepository;
 import hr.petkovic.incomeexpense.repository.RoleRepository;
-import hr.petkovic.incomeexpense.repository.TransactionTypeRepository;
 import hr.petkovic.incomeexpense.repository.UserRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TransactionServiceTest {
+public class UserAndRoleServiceTest {
 
 	@Autowired
-	private TransactionService tService;
-
-	@Autowired
-	private FinancialTransactionRepository ftRepo;
-
-	private FinancialTransaction ft = new FinancialTransaction();
+	private UserService uService;
 
 	@Autowired
 	private UserRepository uRepo;
@@ -58,54 +49,41 @@ public class TransactionServiceTest {
 
 	List<User> operUsers = new ArrayList<>();
 
-	@Autowired
-	private TransactionTypeRepository typeRepo;
-
-	private TransactionType type = new TransactionType();
-
 	@Before
 	public void init() {
-		initUsers();
-		initTransType();
-		ft.setAmount(100F);
-		ft.setCreateDate(new Date());
-		ft.setCreatedBy(userOper);
-		ft.setType(type);
-		ft.setDescription("Test transaction");
-
-		tService.saveTransaction(ft);
+		initUsersAndRoles();
 	}
 
 	@Test
 	@Order(1)
-	public void getTransactions() {
-		List<FinancialTransaction> fts = tService.findAllTransactions();
-		assertThat(fts).isNotEmpty();
+	public void getUsers() {
+		List<User> us = uService.findAllEnabledUsers();
+		assertThat(us).hasSize(2);
 	}
 
 	@Test
 	@Order(2)
-	public void updateTransaction() {
-		ft.setAmount(200F);
-		tService.updateTransaction(ft.getId(), ft);
-		assertThat(tService.findTransactionById(ft.getId()).getAmount()).isEqualTo(200F);
+	public void disableUser() {
+		uService.disableUser(userOper.getId());
+		List<User> us = uService.findAllEnabledUsers();
+		assertThat(us).hasSize(1);
 	}
 
 	@Test
 	@Order(3)
-	public void deleteTransaction() {
-		tService.deleteTransactionById(ft.getId());
-		assertThat(tService.findTransactionById(ft.getId())).isNull();
+	public void updateUser() {
+		userOper.setUsername("OperTest");
+		uService.updateUser(userOper.getId(), userOper);
+		assertThat(uService.findUserByUsername("OperTest")).isNotNull();
 	}
 
 	@After
 	public void clean() {
-		ftRepo.deleteAll();
-		destroyUsers();
-		destroyTransType();
+		uRepo.deleteAll();
 	}
 
-	private void initUsers() {
+	private void initUsersAndRoles() {
+
 		List<Role> roles = rRepo.findAll();
 		if (roles.isEmpty()) {
 			roleAdm.setName("ROLE_ADMIN");
@@ -123,13 +101,13 @@ public class TransactionServiceTest {
 		userAdmin.setUsername("admin");
 		userAdmin.setRoles(adminRoles);
 
-		uRepo.save(userAdmin);
+		uService.saveUser(userAdmin);
 
 		adminRoles.add(roleAdm);
 		adminRoles.add(roleOper);
 		userAdmin.setRoles(adminRoles);
 
-		uRepo.save(userAdmin);
+		userAdmin.setId(uService.saveUser(userAdmin).getId());
 
 		userOper.setCreatedAt(new Date());
 		userOper.setEnabled(true);
@@ -137,25 +115,11 @@ public class TransactionServiceTest {
 		userOper.setUsername("oper");
 		userOper.setRoles(operRoles);
 
-		uRepo.save(userOper);
+		userOper.setId(uService.saveUser(userOper).getId());
 
 		operRoles.add(roleOper);
 		userOper.setRoles(operRoles);
-		uRepo.save(userOper);
-	}
+		uService.saveUser(userOper);
 
-	private void initTransType() {
-		type.setName("Income");
-		type.setSubtypeOne("Loans");
-
-		typeRepo.save(type);
-	}
-
-	private void destroyUsers() {
-		uRepo.deleteAll();
-	}
-
-	private void destroyTransType() {
-		typeRepo.deleteAll();
 	}
 }
