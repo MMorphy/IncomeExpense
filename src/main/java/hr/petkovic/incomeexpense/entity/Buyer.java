@@ -2,6 +2,7 @@ package hr.petkovic.incomeexpense.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,17 +33,23 @@ public class Buyer {
 
 	private String description;
 
+	@OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Offer> offers;
+
+	// TODO Napravi da ide preko offer-a na contracte
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@JoinColumn(name = "buyer_id")
 	private Collection<Contract> contracts;
 
-	public Buyer(Long id, String name, String code, String description, Collection<Contract> contracts) {
+	public Buyer(Long id, String name, String code, String description, List<Offer> offers,
+			Collection<Contract> contracts) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.code = code;
 		this.description = description;
+		this.offers = offers;
 		this.contracts = contracts;
 	}
 
@@ -90,6 +97,16 @@ public class Buyer {
 		this.contracts = contracts;
 	}
 
+	public List<Offer> getOffers() {
+		return offers;
+	}
+
+	public void setOffers(List<Offer> offers) {
+		this.offers = offers;
+	}
+
+	// TODO stavi bidirectional i implementiraj add/remove s obe strane
+	// (this.contracts.add(contract); contract.setBuyer(this));
 	public boolean addContract(Contract contract) {
 		try {
 			this.contracts.add(contract);
@@ -105,6 +122,18 @@ public class Buyer {
 			return true;
 		} catch (Exception e) {
 			return false;
+		}
+	}
+
+	public void addOffer(Offer offer) {
+		offers.add(offer);
+		offer.setBuyer(this);
+	}
+
+	public void removeOffer(Offer offer) {
+		offers.remove(offer);
+		if (offer.getBuyer().equals(this)) {
+			offer.setBuyer(null);
 		}
 	}
 

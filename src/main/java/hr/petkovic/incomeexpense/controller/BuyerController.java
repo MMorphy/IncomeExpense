@@ -89,7 +89,6 @@ public class BuyerController {
 		return "redirect:/buyer";
 	}
 
-	//TODO ovo ne radi dobro - pogledaj na netu kako se u thymeleafu iterira kroz listu koja se nalazi u listi nekih objekata
 	@GetMapping("/contracts/{id}")
 	public String getContractDetailsForBuyer(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("buyer", buyerService.findBuyerById(id));

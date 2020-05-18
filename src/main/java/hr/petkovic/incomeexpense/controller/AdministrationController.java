@@ -63,7 +63,6 @@ public class AdministrationController {
 		return "redirect:/admin/user/";
 	}
 
-	// TODO log user out
 	@GetMapping("/user/edit/{id}")
 	public String getUserEditing(@PathVariable("id") Long id, Model model) {
 		UserDTO uDto = new UserDTO();

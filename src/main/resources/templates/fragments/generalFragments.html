@@ -5,77 +5,96 @@
 <meta charset="UTF-8">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css" />
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-	<nav class="navbar navbar-inverse" th:fragment="navbar">
+	<div class="navbar-wrapper">
 		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#myNavbar">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">Income/Expense</a>
-			</div>
-			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav">
-					<li><a th:href="@{/}">Home</a></li>
-					<li><a
-						th:href="@{'/trans/' + ${#authentication.getPrincipal().getUsername()}}">My
-							Transactions</a></li>
-					<li><a
-						th:href="@{'/tasks/user/' + ${#authentication.getPrincipal().getUsername()}}">My
-							Tasks</a></li>
-					<li sec:authorize="hasRole('ROLE_ADMIN')"><a
-						th:href="@{/trans/}">All Transactions</a></li>
-					<li><a th:href="@{/buyer/}">Buyers</a></li>
-					<li><a th:href="@{/contracts/}">Contracts</a></li>
-					<li sec:authorize="hasRole('ROLE_ADMIN')"><a
-						th:href="@{/companies/}">Companies</a></li>
-					<li sec:authorize="hasRole('ROLE_ADMIN')"><a
-						th:href="@{/plans/}">Plans</a></li>
-					<li sec:authorize="hasRole('ROLE_ADMIN')"><a
-						th:href="@{/tasks/}">Tasks</a></li>
-					<li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')"><a
-						class="dropdown-toggle" data-toggle="dropdown" href="#">Administration
-							<span class="caret"></span>
-					</a>
-						<ul class="dropdown-menu">
-							<li><a th:href="@{/admin/user/}"> User administration</a></li>
-							<li><a th:href="@{/admin/type/}"> Transaction types</a></li>
+			<nav class="navbar navbar-inverse" th:fragment="navbar">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse"
+							data-target="#myNavbar">
+							<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#">Income/Expense</a>
+					</div>
+					<div class="collapse navbar-collapse" id="myNavbar">
+						<ul class="nav navbar-nav">
+							<li><a th:href="@{/}">Home</a></li>
+							<li><a
+								th:href="@{'/trans/' + ${#authentication.getPrincipal().getUsername()}}">My
+									Transactions</a></li>
+							<li><a
+								th:href="@{'/tasks/user/' + ${#authentication.getPrincipal().getUsername()}}">My
+									Tasks</a></li>
+							<li sec:authorize="hasRole('ROLE_ADMIN')"><a
+								th:href="@{/trans/}">All Transactions</a></li>
+							<li><a th:href="@{/buyer/}">Buyers</a></li>
+							<li class="dropdown"><a class="dropdown-toggle"
+								data-toggle="dropdown" href="#">Offers <span class="caret"></span>
+							</a>
+								<ul class="dropdown-menu">
+									<li><a th:href="@{/offers/pending}"> Pending offers</a></li>
+									<li><a th:href="@{/offers/declined}"> Declined offers</a></li>
+									<li><a th:href="@{/offers/accepted}"> Accepted offers</a></li>
+									<li><a th:href="@{/offers/}"> All offers</a></li>
+								</ul></li>
 
-						</ul></li>
-					<li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')"><a
-						class="dropdown-toggle" data-toggle="dropdown" href="#">Statistics
-							<span class="caret"></span>
-					</a>
-						<ul class="dropdown-menu">
-							<li><a th:href="@{/statistics/planned/}">
-									Planned/Achieved</a></li>
-							<li><a th:href="@{/statistics/time/}"> Time comparison</a></li>
 
-						</ul></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li sec:authorize="isAuthenticated()"><a
-						href="javascript: document.logoutForm.submit()"> <span
-							class="glyphicon glyphicon-log-out"></span> Logout
-					</a></li>
-				</ul>
-			</div>
-			<form name="logoutForm" th:action="@{/logout}" method="post"
-				th:hidden="true">
-				<input hidden="hidden" type="submit" value="Sign Out" />
-			</form>
+
+
+
+							<li><a th:href="@{/contracts/}">Contracts</a></li>
+							<li sec:authorize="hasRole('ROLE_ADMIN')"><a
+								th:href="@{/companies/}">Companies</a></li>
+							<li sec:authorize="hasRole('ROLE_ADMIN')"><a
+								th:href="@{/plans/}">Financial plans</a></li>
+							<li sec:authorize="hasRole('ROLE_ADMIN')"><a
+								th:href="@{/tasks/}">Tasks</a></li>
+							<li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')"><a
+								class="dropdown-toggle" data-toggle="dropdown" href="#">Administration
+									<span class="caret"></span>
+							</a>
+								<ul class="dropdown-menu">
+									<li><a th:href="@{/admin/user/}"> User administration</a></li>
+									<li><a th:href="@{/admin/type/}"> Transaction types</a></li>
+
+								</ul></li>
+							<li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')"><a
+								class="dropdown-toggle" data-toggle="dropdown" href="#">Statistics
+									<span class="caret"></span>
+							</a>
+								<ul class="dropdown-menu">
+									<li><a th:href="@{/statistics/planned/}">
+											Planned/Achieved</a></li>
+									<li><a th:href="@{/statistics/time/}"> Time comparison</a></li>
+
+								</ul></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li sec:authorize="isAuthenticated()"><a
+								href="javascript: document.logoutForm.submit()"> <span
+									class="glyphicon glyphicon-log-out"></span> Logout
+							</a></li>
+						</ul>
+					</div>
+					<form name="logoutForm" th:action="@{/logout}" method="post"
+						th:hidden="true">
+						<input hidden="hidden" type="submit" value="Sign Out" />
+					</form>
+				</div>
+			</nav>
+
 		</div>
-	</nav>
-
-
+	</div>
 
 
 </body>

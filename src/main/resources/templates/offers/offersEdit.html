@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Offer adding</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</head>
+<body>
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<form method="POST" th:object="${editOffer}"
+		th:action="@{'/offers/edit/' + *{id}}">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="form-group col-lg-4">
+					<label for="buyer">Buyer:</label> <select id="buyer"
+						th:field="*{buyer}" class="form-control" required="required">
+						<option th:each="buyer : ${buyers}" th:value="${buyer.id}"
+							th:text="${buyer.name}"></option>
+					</select>
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="no">Offer No.:</label> <input type="text"
+						class="form-control" id="no" th:field="*{offerNo}"
+						required="required">
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="points" class="control-label">Points:</label> <input
+						type="number" class="form-control" id="points"
+						th:field="*{points}" required="required" step="1">
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-lg-2">
+					<label for="gr" class="control-label">Gross Price:</label> <input
+						type="number" class="form-control" id="gr"
+						th:field="*{brutoPrice}" required="required" step="0.01"
+						placeholder="0">
+				</div>
+				<div class="form-group col-lg-2">
+					<label for="discount" class="control-label">Discount:</label> <input
+						type="number" class="form-control" id="amount"
+						th:field="*{discount}" required="required" step="1"
+						placeholder="0">
+				</div>
+				<div class="form-group col-lg-2">
+					<label for="material" class="control-label">Material costs:</label>
+					<input type="number" class="form-control" id="material"
+						th:field="*{materialsExpense}" required="required" step="0.01"
+						placeholder="0">
+				</div>
+				<div class="form-group col-lg-2">
+					<label for="seller" class="control-label">Commission
+						Seller:</label> <input type="number" class="form-control" id="seller"
+						th:field="*{commisionFeeSeller}" required="required" step="0.01"
+						placeholder="0">
+				</div>
+				<div class="form-group col-lg-2">
+					<label for="dealer" class="control-label">Commission
+						Dealer:</label> <input type="number" class="form-control" id="dealer"
+						th:field="*{commisionFeeDealer}" required="required" step="0.01"
+						placeholder="0">
+				</div>
+				<div class="form-group col-lg-2">
+					<label for="manu" class="control-label">Manufacturing
+						Costs:</label> <input type="number" class="form-control" id="manu"
+						th:field="*{totalManufactoringFee}" required="required"
+						step="0.01" placeholder="0">
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-lg-3">
+					<label for="duration" class="control-label">Duration[days]:</label>
+					<input type="number" class="form-control" id="duration"
+						th:field="*{duration}" required="required" step="1"
+						placeholder="0">
+				</div>
+				<div class="form-group col-lg-3">
+					<label for="GM" class="control-label">GM Fee[%]:</label> <input
+						type="number" class="form-control" id="GM" th:field="*{GMFee}"
+						required="required" step="1" placeholder="0">
+				</div>
+				<div class="form-group col-lg-6">
+					<label for="desc" class="control-label">Description:</label> <input
+						type="text" class="form-control" id="desc"
+						th:field="*{description}">
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-lg-4">
+					<input type="submit" th:value="Submit" name="action"> <input
+						type="button" onclick="history.go(-1);" value="Back">
+				</div>
+			</div>
+		</div>
+	</form>
+
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Offers</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</th:block>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>
+</head>
+<body>
+	  
+	<script>
+		$(document).ready(function() {
+			$('#offersTable').DataTable();
+		});
+	</script>
+	 
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+
+	<div class="container-fluid">
+		<div class="col-md-12">
+			<div class="col-md-12">
+				<h1 class="col-md-3">Offers</h1>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<table class="display responsive nowrap" id="offersTable"
+						width="100%">
+						<thead>
+							<tr>
+								<th>Offer No. / Buyer</th>
+								<th>Points</th>
+								<th>Duration</th>
+								<th>Gross / Discount / Net</th>
+								<th>Materials / Seller / Dealer / Manufacturing</th>
+
+								<th>Gross income</th>
+								<th>GM Fee</th>
+								<th>Net income</th>
+								<th>Description</th>
+								<th>Contract</th>
+								<th>Offer</th>
+								<th>Remove</th>
+								<th>Edit</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="offer : ${offers}">
+								<td th:text="${offer.offerNo + ' ' + offer.buyer.name}"></td>
+								<td th:text="${offer.points}"></td>
+								<td th:text="${offer.duration} + ' days'"></td>
+								<td
+									th:text="${offer.brutoPrice + '$' + ' / ' + offer.discount + '%' + ' / ' + #numbers.formatDecimal(offer.brutoPrice - (offer.brutoPrice * (offer.discount/100)), 1, 'COMMA', 2, 'POINT') + '$'}"></td>
+								<td
+									th:text="${offer.materialsExpense + '$' + ' / ' + offer.commisionFeeSeller + '$' + ' / ' + offer.commisionFeeDealer + '$' + ' / ' + offer.totalManufactoringFee + '$'}"></td>
+								<td
+									th:text="${#numbers.formatDecimal(offer.brutoPrice - offer.totalManufactoringFee, 1, 'COMMA', 2, 'POINT')} + '$'"></td>
+								<td th:text="${offer.GMFee} + '%'"></td>
+								<td
+									th:text="${#numbers.formatDecimal(offer.brutoPrice - offer.totalManufactoringFee -((offer.brutoPrice - offer.totalManufactoringFee) * (offer.GMFee/100)), 1, 'COMMA', 2, 'POINT')} + '$'"></td>
+								<td th:text="${offer.description}"></td>
+								<td>
+									<form th:action="@{'/offers/contract/' + ${offer.id}}"
+										method="post">
+										<button>Make</button>
+									</form>
+								</td>
+								<td>
+									<form th:action="@{'/offers/delete/' + ${offer.id}}"
+										method="post">
+										<button>Rejected</button>
+									</form>
+								</td>
+								<td>
+									<form th:action="@{'/offers/delete/' + ${offer.id}}"
+										method="post">
+										<button>Remove</button>
+									</form>
+								</td>
+								<td>
+									<form th:action="@{'/offers/edit/' + ${offer.id}}" method="get">
+										<button>Edit</button>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+				<form th:action="@{/offers/add}" method="get">
+					<button>Add new offer</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
