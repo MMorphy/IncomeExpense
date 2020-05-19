@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Contracts</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</th:block>
+</head>
+<body>
+
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="thumbnail">
+				<div class="caption text-center">
+					<div class="position-relative">
+						<a th:href="@{/contracts/user/add}" title="Offer adding"><img
+							src="https://www.freepnglogos.com/uploads/plus-icon/file-ambox-emblem-plus-svg-wikimedia-commons-18.png"
+							width="100" /></a>
+					</div>
+					<h3 id="thumbnail-label">
+						<a th:href="@{/contracts/user/add}">ADD CONTRACT</a>
+					</h3>
+				</div>
+			</div>
+
+
+		</div>
+
+		<div class="col-sm-6">
+			<div class="thumbnail">
+				<div class="caption text-center">
+					<div class="position-relative">
+						<a th:href="@{/contracts/user}" title="Performance"><img
+							src="https://img.icons8.com/ios/50/000000/sales-performance.png"
+							width="100" /></a>
+						<h3 id="thumbnail-label">
+							<a th:href="@{/contracts/user}">MY CONTRACTS</a>
+						</h3>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="thumbnail">
+				<div class="caption text-center">
+					<div class="position-relative">
+						<a th:href="@{/contracts/user/unpaid}" title="Salaries"><img
+							src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIDAgNDQwLjk5NCA0NDAuOTk0IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0NDAuOTk0IDQ0MC45OTQ7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjc0LjYxLDI0OS4xODNjLTUuMDQ0LDAtOC44MTYsMy43MTQtMTAuNjE4LDUuOTI5Yy00LjAyNSw0Ljk1MS02LjMzNiwxMi4wNTktNi4zMzYsMTkuNDk5czIuMzExLDE0LjU0OCw2LjMzNiwxOS41ICAgIGMxLjgwMiwyLjIxNCw1LjU3NCw1LjkyOCwxMC42MTgsNS45MjhzOC44MTYtMy43MTQsMTAuNjE4LTUuOTI4YzQuMDI1LTQuOTUyLDYuMzM2LTEyLjA2LDYuMzM2LTE5LjVzLTIuMzExLTE0LjU0OC02LjMzNi0xOS40OTkgICAgQzI4My40MjgsMjUyLjg5NiwyNzkuNjU0LDI0OS4xODMsMjc0LjYxLDI0OS4xODN6IiBmaWxsPSIjMDAwMDAwIi8+CgkJPHBhdGggZD0iTTE2Ni4zODQsMTkxLjgxYzUuMDQ0LDAsOC44MTYtMy43MTQsMTAuNjE4LTUuOTI4YzQuMDI2LTQuOTUyLDYuMzM2LTEyLjA1OSw2LjMzNi0xOS41YzAtNy40NDEtMi4zMS0xNC41NDctNi4zMzYtMTkuNDk5ICAgIGMtMS44MDItMi4yMTQtNS41NzQtNS45MjgtMTAuNjE4LTUuOTI4Yy01LjA0NCwwLTguODE2LDMuNzE0LTEwLjYxOCw1LjkyOGMtNC4wMjYsNC45NTItNi4zMzYsMTIuMDU4LTYuMzM2LDE5LjQ5OSAgICBjMCw3LjQ0MSwyLjMxLDE0LjU0OCw2LjMzNiwxOS41QzE1Ny41NjcsMTg4LjA5NywxNjEuMzQsMTkxLjgxLDE2Ni4zODQsMTkxLjgxeiIgZmlsbD0iIzAwMDAwMCIvPgoJCTxwYXRoIGQ9Ik00MzUuMjg5LDIwOS4wMzdsLTUzLjk4NC00MC43OTRsMTkuNjk5LTY0Ljc1MWMxLjMxMi00LjMxLDAuNTI1LTguOTg0LTIuMTIzLTEyLjYyOCAgICBjLTIuNjQ3LTMuNjQzLTYuODU0LTUuODMzLTExLjM1Ni01LjkxNmwtNjcuNjcyLTEuMjM1bC0yMi4wNjUtNjMuOTk3Yy0xLjQ2OS00LjI2Mi00Ljg1NS03LjU4Ny05LjE0My04Ljk3OSAgICBjLTQuMjgzLTEuMzkzLTguOTc5LTAuNjkyLTEyLjY3NSwxLjg5MmwtNTUuNDc1LDM4LjgxNEwxNjUuMDIsMTIuNjI3Yy0zLjY5My0yLjU4My04LjM4Ny0zLjI4NS0xMi42NzQtMS44OTIgICAgYy00LjI4OSwxLjM5My03LjY3Miw0LjcxOC05LjE0Myw4Ljk3OWwtMjIuMDY0LDYzLjk5NmwtNjcuNjcyLDEuMjM2Yy00LjUwMiwwLjA4My04LjcwNywyLjI3Mi0xMS4zNTUsNS45MTYgICAgYy0yLjY0OCwzLjY0NC0zLjQzNiw4LjMxOS0yLjEyNSwxMi42MjhsMTkuNzAxLDY0Ljc1TDUuNzA1LDIwOS4wMzdDMi4xMTEsMjExLjc1MSwwLDIxNS45OTUsMCwyMjAuNDk3ICAgIGMwLDQuNTAzLDIuMTExLDguNzQ2LDUuNzA1LDExLjQ2MWw1My45ODQsNDAuNzk0TDM5Ljk5LDMzNy41MDJjLTEuMzExLDQuMzEtMC41MjMsOC45ODQsMi4xMjUsMTIuNjI4ICAgIGMyLjY0OCwzLjY0Myw2Ljg1NCw1LjgzMywxMS4zNTUsNS45MTZsNjcuNjcyLDEuMjM2bDIyLjA2NCw2My45OTZjMS40NjksNC4yNjIsNC44NTQsNy41ODcsOS4xNDEsOC45NzkgICAgYzQuMjg1LDEuMzk0LDguOTgsMC42OTIsMTIuNjc0LTEuODkzbDU1LjQ3NS0zOC44MTRsNTUuNDc3LDM4LjgxNWMyLjQ0MywxLjcwOSw1LjMyNCwyLjU5NSw4LjIzNiwyLjU5NSAgICBjMS40ODgsMCwyLjk4Ni0wLjIzLDQuNDM4LTAuNzAzYzQuMjg2LTEuMzkzLDcuNjcyLTQuNzE4LDkuMTQxLTguOTc5bDIyLjA2My02My45OTZsNjcuNjc1LTEuMjM3ICAgIGM0LjUwMi0wLjA4Myw4LjcwNy0yLjI3MiwxMS4zNTQtNS45MTZjMi42NDgtMy42NDQsMy40MzctOC4zMTgsMi4xMjUtMTIuNjI4bC0xOS43MDEtNjQuNzQ5bDUzLjk4NC00MC43OTUgICAgYzMuNTk0LTIuNzE1LDUuNzA1LTYuOTU4LDUuNzA1LTExLjQ2MVM0MzguODgzLDIxMS43NSw0MzUuMjg5LDIwOS4wMzd6IE0xNjYuMzg0LDEyMS4wMWMyMC4zOCwwLDM2LjkwMSwyMC4zMTQsMzYuOTAxLDQ1LjM3NCAgICBjMCwyNS4wNjEtMTYuNTIxLDQ1LjM3NS0zNi45MDEsNDUuMzc1Yy0yMC4zOCwwLTM2LjkwMS0yMC4zMTQtMzYuOTAxLTQ1LjM3NUMxMjkuNDgyLDE0MS4zMjQsMTQ2LjAwNCwxMjEuMDEsMTY2LjM4NCwxMjEuMDF6ICAgICBNMTY0LjAzOCwzMjAuMTc4Yy0yLjMwNywzLjIwOS02LjA0Nyw1LjEyNS0xMC4wMDUsNS4xMjVjLTIuNTgxLDAtNS4wNTktMC44LTcuMTYzLTIuMzEyYy01LjUwOS0zLjk1Ny02Ljc3MS0xMS42NTgtMi44MTMtMTcuMTY3ICAgIGwxMzIuOS0xODUuMDFjMi4zMDYtMy4yMDksNi4wNDYtNS4xMjUsMTAuMDA1LTUuMTI1YzIuNTgsMCw1LjA1OCwwLjgsNy4xNjIsMi4zMTJjNS41MDksMy45NTcsNi43NzEsMTEuNjU4LDIuODEzLDE3LjE2NyAgICBMMTY0LjAzOCwzMjAuMTc4eiBNMjc0LjYxLDMxOS45ODNjLTIwLjM4LDAtMzYuOTAxLTIwLjMxMy0zNi45MDEtNDUuMzc1YzAtMjUuMDU5LDE2LjUyMS00NS4zNzMsMzYuOTAxLTQ1LjM3MyAgICBzMzYuOSwyMC4zMTQsMzYuOSw0NS4zNzNDMzExLjUxMiwyOTkuNjY5LDI5NC45OSwzMTkuOTgzLDI3NC42MSwzMTkuOTgzeiIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo="
+							width="100" /></a>
+					</div>
+					<h3 id="thumbnail-label">
+						<a th:href="@{/contracts/user/unpaid}">MY UNPAID CONTRACTS</a>
+					</h3>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-6" sec:authorize="hasRole('ROLE_ADMIN')">
+			<div class="thumbnail">
+				<div class="caption text-center">
+					<div class="position-relative">
+						<a th:href="@{/contracts/unpaid}" title="Fired employees"><img
+							src="https://img.icons8.com/color/100/000000/minus.png"
+							width="100" /></a>
+					</div>
+					<h3 id="thumbnail-label">
+						<a th:href="@{/contracts/unpaid}">ALL UNPAID CONTRACTS</a>
+					</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6" sec:authorize="hasRole('ROLE_ADMIN')">
+			<div class="thumbnail">
+				<div class="caption text-center">
+					<div class="position-relative">
+						<a th:href="@{/contracts}" title="Fired employees"><img
+							src="https://img.icons8.com/color/100/000000/minus.png"
+							width="100" /></a>
+					</div>
+					<h3 id="thumbnail-label">
+						<a th:href="@{/contracts}">ALL CONTRACTS</a>
+					</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<a href="https://google.com" class="btn btn-primary btn-block">Link</a>
+		</div>
+	</div>
+</body>
+</html>

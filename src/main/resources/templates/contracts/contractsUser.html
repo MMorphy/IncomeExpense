@@ -27,10 +27,11 @@
 			<table class="table" id="contractsTable">
 				<thead>
 					<tr>
-						<th>User</th>
+						<th>ID</th>
 						<th>Code</th>
 						<th>Agreed amount</th>
 						<th>Current amount</th>
+<!-- 						<th>Currency</th> -->
 						<th>Transactions</th>
 						<th>Remove</th>
 						<th>Edit</th>
@@ -38,23 +39,20 @@
 				</thead>
 				<tbody>
 					<tr th:each="contract : ${contracts}">
-						<td th:text="${contract.username}"></td>
+						<td th:text="${contract.id}"></td>
 						<td th:text="${contract.code}"></td>
-						<td
-							th:text="${#numbers.formatDecimal(contract.agreedAmount, 1, 'COMMA', 2, 'POINT')} + ' $'"></td>
-						<td
-							th:text="${#numbers.formatDecimal(contract.currentAmount, 1, 'COMMA', 2, 'POINT') + ' $'}"></td>
+						<td th:text="${#numbers.formatDecimal(contract.agreedAmount, 1, 'COMMA', 2, 'POINT')} + ' $'"></td>
+						<td th:text="${#numbers.formatDecimal(contract.currentAmount, 1, 'COMMA', 2, 'POINT') + ' $'}"></td>
+<!-- 						<td th:text="${contract.agreedCurrency.name}"></td> -->
 						<td><a th:href="@{'/trans/contracts/' + ${contract.id}}">Transactions
 						</a></td>
 						<td>
-							<form th:action="@{'/contracts/delete/' + ${contract.id}}"
-								method="post">
+							<form th:action="@{'/contracts/delete/' + ${contract.id}}" method="post">
 								<button>Remove</button>
 							</form>
 						</td>
 						<td>
-							<form th:action="@{'/contracts/edit/' + ${contract.id}}"
-								method="get">
+							<form th:action="@{'/contracts/user/edit/' + ${contract.id}}" method="get">
 								<button>Edit</button>
 							</form>
 						</td>
@@ -63,7 +61,7 @@
 			</table>
 
 		</div>
-		<form th:action="@{/contracts/add}" method="get">
+		<form th:action="@{/contracts/user/add}" method="get">
 			<button>Add new contract</button>
 		</form>
 	</div>

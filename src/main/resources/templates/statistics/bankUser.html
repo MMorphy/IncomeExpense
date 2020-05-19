@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Bank</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</th:block>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>
+</head>
+<body>
+	   
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<script>
+		$(document).ready(function() {
+			$('#YearMonth').DataTable();
+			$('#Year').DataTable();
+
+		});
+	</script>
+
+	<div class="col-md-12">
+		<div class="col-md-12">
+			<h1 class="col-md-3">Bank state</h1>
+		</div>
+		<div class="col-md-12">
+			<h3 th:text="'Current cash: ' +${currentCash} + '$'" class="col-md-3"></h3>
+		</div>
+		<div class="col-md-12">
+			<h3 class="col-md-3">Monthly</h3>
+			<div class="col-md-12">
+				<table class="table" id="YearMonth">
+					<thead>
+						<tr>
+							<th>Year</th>
+							<th>Month</th>
+							<th>Sum</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="DTO : ${yearMonth}">
+							<td th:text="${DTO.year}"></td>
+							<td th:text="${DTO.month}"></td>
+							<td
+								th:text="${#numbers.formatDecimal(DTO.sum, 1, 'COMMA', 2, 'POINT')+ ' $'}"></td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<h3 class="col-md-3">Yearly</h3>
+			<div class="col-md-12">
+				<table class="table" id="Year">
+					<thead>
+						<tr>
+							<th>Year</th>
+							<th>Sum</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="DTO : ${year}">
+							<td th:text="${DTO.year}"></td>
+							<td
+								th:text="${#numbers.formatDecimal(DTO.sum, 1, 'COMMA', 2, 'POINT')+ ' $'}"></td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

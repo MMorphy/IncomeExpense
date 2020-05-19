@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Hours</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</th:block>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>
+</head>
+<body>
+	  
+	<script>
+		$(document).ready(function() {
+			$('#offersTable').DataTable();
+		});
+	</script>
+	 
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+
+	<div class="container-fluid">
+		<div class="col-md-12">
+			<div class="col-md-12">
+				<h1 class="col-md-3">Hours for user</h1>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<table class="display responsive nowrap" id="offersTable"
+						width="100%">
+						<thead>
+							<tr>
+								<th>Year</th>
+								<th>Month</th>
+								<th>Expected Hours</th>
+								<th>Actual Hours</th>
+								<th>Productivity</th>
+
+								<th>Edit</th>
+								<th>Delete</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="h : ${hours}">
+								<td th:text="${e.year}"></td>
+								<td th:text="${e.month}"></td>
+								<td th:text="${e.expectedHours} + 'h'"></td>
+								<td th:text="${e.actualHours} + 'h'"></td>
+								<td th:text="${e.productivity} + '%'"></td>
+
+								<td>
+									<form th:action="@{'/hours/edit/' + ${h.id}}" method="get">
+										<button>Edit</button>
+									</form>
+								</td>
+								<td>
+									<form th:action="@{'/hours/delete/' + ${e.id}}" method="post">
+										<button>Delete</button>
+									</form>
+								</td>
+
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+				<form th:if="${userId == null}" th:action="@{/hours/add}" method="get">
+					<button>Add new hours</button>
+				</form>
+				<form th:if="${userId != null}" th:action="@{'/hours/add/' + ${userId}}" method="get">
+					<button>Add new hours for user</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import hr.petkovic.incomeexpense.DTO.BankDTO;
 import hr.petkovic.incomeexpense.DTO.PlannedAggDTO;
 import hr.petkovic.incomeexpense.DTO.PlannedVsAchievedDTO;
 import hr.petkovic.incomeexpense.DTO.TimeAggDTO;
@@ -32,6 +34,11 @@ public class StatisticsController {
 		this.planService = planService;
 		this.transService = transService;
 		this.statsService = statsService;
+	}
+
+	@GetMapping("/home")
+	public String getHome() {
+		return "statistics/statsHome";
 	}
 
 	@GetMapping("/planned")
@@ -73,5 +80,52 @@ public class StatisticsController {
 		List<TimeAggDTO> expensesYear = transService.findAllExpensesTransactionsGroupedByYear();
 		model.addAttribute("expensesYear", statsService.getDifferencesAndSort(expensesYear, true));
 		return "statistics/time";
+	}
+
+	@GetMapping("/bankAll")
+	public String getBankAll(Model model) {
+		List<TimeAggDTO> incomeDtos = statsService
+				.getDifferencesAndSort(transService.findIncomeTransactionsGroupedByYearAndMonth(), false);
+		List<TimeAggDTO> expensesDtos = statsService
+				.getDifferencesAndSort(transService.findExpensesTransactionsGroupedByYearAndMonth(), false);
+		List<BankDTO> totalMonth = statsService.getSumsYearMonth(incomeDtos, expensesDtos);
+		model.addAttribute("yearMonth", totalMonth);
+
+		List<TimeAggDTO> incomeYear = statsService
+				.getDifferencesAndSort(transService.findAllIncomeTransactionsGroupedByYear(), true);
+		List<TimeAggDTO> expensesYear = statsService
+				.getDifferencesAndSort(transService.findAllExpensesTransactionsGroupedByYear(), true);
+		List<BankDTO> totalYear = statsService.getSumsYear(incomeYear, expensesYear);
+		model.addAttribute("year", totalYear);
+
+		model.addAttribute("currentCash", totalYear.get(totalYear.size() - 1).getSum());
+		return "statistics/bankGeneral";
+	}
+
+	@GetMapping("/bank/{username}")
+	public String getBackForUser(@PathVariable("username") String username, Model model) {
+		List<TimeAggDTO> a = transService.findIncomeTransactionsGroupedByYearAndMonthForUser(username);
+		List<TimeAggDTO> b = transService.findExpensesTransactionsGroupedByYearAndMonthForUser(username);
+		if (a.size() == 0 && b.size() == 0) {
+			model.addAttribute("yearMonth", new ArrayList<>());
+			model.addAttribute("year", new ArrayList<>());
+			model.addAttribute("currentCash", 0);
+			return "statistics/bankUser";
+		}
+		List<TimeAggDTO> c = transService.findAllIncomeTransactionsGroupedByYearForUser(username);
+		List<TimeAggDTO> d = transService.findAllExpensesTransactionsGroupedByYearForUser(username);
+
+		List<TimeAggDTO> incomeDtos = statsService.getDifferencesAndSort(a, false);
+		List<TimeAggDTO> expensesDtos = statsService.getDifferencesAndSort(b, false);
+		List<BankDTO> totalMonth = statsService.getSumsYearMonth(incomeDtos, expensesDtos);
+		model.addAttribute("yearMonth", totalMonth);
+
+		List<TimeAggDTO> incomeYear = statsService.getDifferencesAndSort(c, true);
+		List<TimeAggDTO> expensesYear = statsService.getDifferencesAndSort(d, true);
+		List<BankDTO> totalYear = statsService.getSumsYear(incomeYear, expensesYear);
+		model.addAttribute("year", totalYear);
+
+		model.addAttribute("currentCash", totalYear.get(totalYear.size() - 1).getSum());
+		return "statistics/bankUser";
 	}
 }

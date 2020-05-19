@@ -24,7 +24,6 @@ import hr.petkovic.incomeexpense.repository.TransactionTypeRepository;
 @Service
 public class TransactionService {
 
-	// TODO refactor this so that you use other services not repositories
 	@Autowired
 	private FinancialTransactionRepository transRepo;
 
@@ -179,5 +178,21 @@ public class TransactionService {
 
 	public List<TimeAggDTO> findAllExpensesTransactionsGroupedByYear() {
 		return transRepo.findAllExpensesTransactionSumsByYear();
+	}
+
+	public List<TimeAggDTO> findIncomeTransactionsGroupedByYearAndMonthForUser(String username) {
+		return transRepo.findAllIncomeTransactionSumsByYearAndMonthForUser(username);
+	}
+
+	public List<TimeAggDTO> findExpensesTransactionsGroupedByYearAndMonthForUser(String username) {
+		return transRepo.findAllExpensesTransactionSumsByYearAndMonthForUser(username);
+	}
+
+	public List<TimeAggDTO> findAllIncomeTransactionsGroupedByYearForUser(String username) {
+		return transRepo.findAllIncomeTransactionSumsByYearForUser(username);
+	}
+
+	public List<TimeAggDTO> findAllExpensesTransactionsGroupedByYearForUser(String username) {
+		return transRepo.findAllExpensesTransactionSumsByYearForUser(username);
 	}
 }

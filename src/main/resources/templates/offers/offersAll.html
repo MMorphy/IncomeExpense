@@ -31,6 +31,7 @@
 						width="100%">
 						<thead>
 							<tr>
+								<th>User</th>
 								<th>Offer No. / Buyer</th>
 								<th>Points</th>
 								<th>Duration</th>
@@ -49,6 +50,7 @@
 						</thead>
 						<tbody>
 							<tr th:each="offer : ${offers}">
+								<td th:text="${offer.username}"></td>
 								<td th:text="${offer.offerNo + ' ' + offer.buyer.name}"></td>
 								<td th:text="${offer.points}"></td>
 								<td th:text="${offer.duration} + ' days'"></td>
@@ -69,8 +71,8 @@
 									</form>
 								</td>
 								<td>
-									<form th:action="@{'/offers/reject/' + ${offer.id}}"
-										method="get">
+									<form th:action="@{'/offers/delete/' + ${offer.id}}"
+										method="post">
 										<button>Rejected</button>
 									</form>
 								</td>

@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="ISO-8859-1">
+<title>Unapredjenje</title>
+<th:block th:include="fragments/generalFragments.html :: headerfiles">
+</th:block>
+</head>
+<body>
+
+	<div th:replace="fragments/generalFragments.html :: navbar"></div>
+
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="thumbnail">
+				<div class="caption text-center">
+					<div class="position-relative">
+						<a th:href="@{/tasks/add}" title="Incomes"><img
+							src="https://www.freepnglogos.com/uploads/plus-icon/file-ambox-emblem-plus-svg-wikimedia-commons-18.png"
+							width="100" /></a>
+					</div>
+					<h3 id="thumbnail-label">
+						<a th:href="@{/tasks/add}">NEW TASK</a>
+					</h3>
+				</div>
+			</div>
+
+
+		</div>
+
+		<div class="col-sm-6">
+			<div class="thumbnail">
+				<div class="caption text-center">
+					<div class="position-relative">
+						<a
+							th:href="@{'/tasks/user/' + ${#authentication.getPrincipal().getUsername()}}"
+							title="My Tasks"><img
+							src="https://img.icons8.com/color/100/000000/minus.png"
+							width="100" /></a>
+						<h3 id="thumbnail-label">
+							<a
+								th:href="@{'/tasks/user/' + ${#authentication.getPrincipal().getUsername()}}">My
+								Tasks</a>
+						</h3>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6" sec:authorize="hasRole('ROLE_ADMIN')">
+			<div class="thumbnail">
+				<div class="caption text-center">
+					<div class="position-relative">
+						<a th:href="@{/tasks/}" title="Administration"><img
+							src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBpZD0iTGF5ZXJfMyIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNjQgNjQiIGhlaWdodD0iNTEycHgiIHZpZXdCb3g9IjAgMCA2NCA2NCIgd2lkdGg9IjUxMnB4Ij48Zz48cGF0aCBkPSJtNDIgMTdjMC01LjUxNC00LjQ4Ni0xMC0xMC0xMHMtMTAgNC40ODYtMTAgMTAgNC40ODYgMTAgMTAgMTAgMTAtNC40ODYgMTAtMTB6bS0xOCAwYzAtNC40MTEgMy41ODktOCA4LThzOCAzLjU4OSA4IDgtMy41ODkgOC04IDgtOC0zLjU4OS04LTh6IiBmaWxsPSIjMDAwMDAwIi8+PHBhdGggZD0ibTQ5Ljk5IDM2LjI3My04Ljg0OS0xLjI2NC01LjE0MS0uODU2di0yLjE1My0xLjM4MmwyLjY0MS0xLjMyIDEuMTM4IDEuMTM3Yy4zOTEuMzkxIDEuMDIzLjM5MSAxLjQxNCAwbDQuMjQyLTQuMjQzYy4zOTEtLjM5MS4zOTEtMS4wMjMgMC0xLjQxNGwtMS4xMzctMS4xMzcgMS4zMi0yLjY0MWgxLjM4MmMuNTUzIDAgMS0uNDQ4IDEtMXYtNmMwLS41NTItLjQ0Ny0xLTEtMWgtMS4zODJsLTEuMzItMi42NDEgMS4xMzctMS4xMzdjLjM5MS0uMzkxLjM5MS0xLjAyMyAwLTEuNDE0bC00LjI0Mi00LjI0M2MtLjM5MS0uMzkxLTEuMDIzLS4zOTEtMS40MTQgMGwtMS4xMzggMS4xMzctMi42NDEtMS4zMnYtMS4zODJjMC0uNTUyLS40NDctMS0xLTFoLTZjLS41NTMgMC0xIC40NDgtMSAxdjEuMzgybC0yLjY0MSAxLjMyLTEuMTM4LTEuMTM3Yy0uMzkxLS4zOTEtMS4wMjMtLjM5MS0xLjQxNCAwbC00LjI0MiA0LjI0M2MtLjM5MS4zOTEtLjM5MSAxLjAyMyAwIDEuNDE0bDEuMTM3IDEuMTM3LTEuMzIgMi42NDFoLTEuMzgyYy0uNTUzIDAtMSAuNDQ4LTEgMXY2YzAgLjU1Mi40NDcgMSAxIDFoMS4zODJsMS4zMiAyLjY0MS0xLjEzNyAxLjEzN2MtLjM5MS4zOTEtLjM5MSAxLjAyMyAwIDEuNDE0bDQuMjQyIDQuMjQzYy4zOTEuMzkxIDEuMDIzLjM5MSAxLjQxNCAwbDEuMTM4LTEuMTM3IDIuNjQxIDEuMzJ2MS4zODIgMi4xNTNsLTUuMTQyLjg1Ny04Ljg0OSAxLjI2NGMtMy40MjUuNDktNi4wMDkgMy40NjktNi4wMDkgNi45M3YxOC43OTZjMCAuNTUzLjQ0NyAxIDEgMWg0NmMuNTUzIDAgMS0uNDQ3IDEtMXYtMTguNzk2YzAtMy40NjEtMi41ODQtNi40NC02LjAxLTYuOTMxem0tMTQuNDM5IDEzLjQwNC0uNTE2LTcuMjI5IDEuODU5IDEuODU5em0tMS41NjggNi4xMjEtMS45ODMgMy45NjYtMS45ODMtMy45NjYuNzg5LTExLjA0OWMuMzY2LjE2Ljc2OS4yNTEgMS4xOTQuMjUxcy44MjgtLjA5MSAxLjE5NC0uMjUxem0tNi44NzYtMTEuNDkxIDEuODU5LTEuODU5LS41MTYgNy4yMjl6bTIuODkzLTExLjMwN2g0djEuNTg2bC0yIDItMi0yem0xIDcuNDE0IDEtMSAxIDF2MS41ODZjMCAuNTUyLS40NDggMS0xIDFzLTEtLjQ0OC0xLTF6bTYuNjA5IDEuNzgtNC4xOTUtNC4xOTQgMS45MjktMS45MjkgNC4yOTQuNzE2em0tMTItMTUuMDA3Yy0uMzg1LS4xOTItLjg0OS0uMTE4LTEuMTU0LjE4OGwtLjk0Ljk0LTIuODI4LTIuODI5LjkzOS0uOTRjLjMwNS0uMzA0LjM4LS43NjkuMTg4LTEuMTU0bC0xLjkxOS0zLjgzOGMtLjE3LS4zNC0uNTE2LS41NTQtLjg5NS0uNTU0aC0xdi00aDFjLjM3OSAwIC43MjUtLjIxNC44OTUtLjU1M2wxLjkxOS0zLjgzOGMuMTkyLS4zODUuMTE3LS44NS0uMTg4LTEuMTU0bC0uOTM5LS45NCAyLjgyOC0yLjgyOS45NC45NGMuMzA2LjMwNS43NzEuMzggMS4xNTQuMTg4bDMuODM4LTEuOTE5Yy4zMzktLjE3LjU1My0uNTE2LjU1My0uODk1di0xaDR2MWMwIC4zNzkuMjE0LjcyNS41NTMuODk1bDMuODM4IDEuOTE5Yy4zODQuMTkxLjg0OS4xMTcgMS4xNTQtLjE4OGwuOTQtLjk0IDIuODI4IDIuODI5LS45MzkuOTRjLS4zMDUuMzA0LS4zOC43NjktLjE4OCAxLjE1NGwxLjkxOSAzLjgzOGMuMTcuMzM5LjUxNi41NTMuODk1LjU1M2gxdjRoLTFjLS4zNzkgMC0uNzI1LjIxNC0uODk1LjU1M2wtMS45MTkgMy44MzhjLS4xOTIuMzg1LS4xMTcuODUuMTg4IDEuMTU0bC45MzkuOTQtMi44MjggMi44MjktLjk0LS45NGMtLjMwNS0uMzA0LS43NjktLjM3OC0xLjE1NC0uMTg4bC0zLjgzOCAxLjkxOWMtLjMzOS4xNy0uNTUzLjUxNi0uNTUzLjg5NXYxaC00di0xYzAtLjM3OS0uMjE0LS43MjUtLjU1My0uODk1em0zLjA0OCA4Ljg4NCAxLjkyOSAxLjkyOS00LjE5NSA0LjE5NC0yLjAyNy01LjQwN3ptLTE4LjY1NyA3LjEzM2MwLTIuNDcyIDEuODQ2LTQuNjAxIDQuMjkzLTQuOTVsOC4wNTMtMS4xNSAyLjcgNy4yMDEgMi45ODQgMTEuOTM4LjAwNS0uMDAxYy4wMTguMDcxLjAzOC4xNDEuMDcuMjA2bDIuMjc3IDQuNTUyaC0xMi4zODJ2LTE1aC0ydjE1aC02em00NCAxNy43OTZoLTd2LTE1aC0ydjE1aC0xMS4zODJsMi4yNzYtNC41NTNjLjAzMy0uMDY1LjA1My0uMTM2LjA3LS4yMDZsLjAwNS4wMDEgMi45ODQtMTEuOTM4IDIuNy03LjIwMSA4LjA1MyAxLjE1YzIuNDQ3LjM1IDQuMjkzIDIuNDc5IDQuMjkzIDQuOTV2MTcuNzk3eiIgZmlsbD0iIzAwMDAwMCIvPjwvZz48L3N2Zz4K"
+							width="100" /></a>
+					</div>
+					<h3 id="thumbnail-label">
+						<a th:href="@{/tasks/}">ALL TASKS</a>
+					</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<a href="https://google.com" class="btn btn-primary btn-block">Link</a>
+		</div>
+	</div>
+</body>
+</html>

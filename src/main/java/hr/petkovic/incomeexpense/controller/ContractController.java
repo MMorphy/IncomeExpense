@@ -1,6 +1,7 @@
 package hr.petkovic.incomeexpense.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,32 @@ public class ContractController {
 		return "contracts/contracts";
 	}
 
+	@GetMapping("/unpaid")
+	public String getAllUnpaidContracts(Model model) {
+		model.addAttribute("contracts", contractService.findAllUnpaid(null));
+		return "contracts/contracts";
+	}
+
+	@GetMapping("/home")
+	public String home() {
+		return "contracts/contractsHome";
+	}
+
+	@GetMapping("/user")
+	public String getAllContractsForUser(Model model) {
+		model.addAttribute("contracts", contractService
+				.findAllContractsForUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+		return "contracts/contractsUser";
+
+	}
+
+	@GetMapping("/user/unpaid")
+	public String getAllUnpaidContractsForUser(Model model) {
+		model.addAttribute("contracts",
+				contractService.findAllUnpaid(SecurityContextHolder.getContext().getAuthentication().getName()));
+		return "contracts/contractsUser";
+	}
+
 	@GetMapping("/{id}")
 	public String getAllContractsForBuyer(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("contracts", contractService.findAllContractsForBuyerId(id));
@@ -56,7 +83,9 @@ public class ContractController {
 	@PostMapping("/add")
 	public String addContract(Model model, ContractDTO addContract) {
 		Buyer buyer = addContract.getBuyer();
-		buyer.addContract(addContract.getContract());
+		Contract c = addContract.getContract();
+		c.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		buyer.addContract(c);
 		buyerService.updateBuyer(buyer.getId(), buyer);
 
 		model.addAttribute("contracts", contractService.findAllContracts());
@@ -95,10 +124,69 @@ public class ContractController {
 		return "redirect:/contracts";
 	}
 
+	@GetMapping("/user/add")
+	public String getContractAddingUser(Model model) {
+		model.addAttribute("addContract", new ContractDTO());
+		model.addAttribute("currencies", currencyService.findAllCurrencies());
+		model.addAttribute("buyers", buyerService.findAllBuyers());
+		return "contracts/contractsAddUser";
+	}
+
+	@PostMapping("/user/add")
+	public String addContractUser(Model model, ContractDTO addContract) {
+		Buyer buyer = addContract.getBuyer();
+		Contract c = addContract.getContract();
+		c.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		buyer.addContract(c);
+		buyerService.updateBuyer(buyer.getId(), buyer);
+
+		model.addAttribute("contracts", contractService.findAllContracts());
+		return "redirect:/contracts/user";
+	}
+
+	@GetMapping("/user/edit/{id}")
+	public String getContractEditingUser(@PathVariable("id") Long id, Model model) {
+		ContractDTO editContract = new ContractDTO();
+		editContract.setContract(contractService.findContractById(id));
+		editContract.setBuyer(buyerService.findBuyerByContractId(id));
+		model.addAttribute("editContract", editContract);
+		model.addAttribute("currencies", currencyService.findAllCurrencies());
+		model.addAttribute("buyers", buyerService.findAllBuyers());
+		return "contracts/contractsEditUser";
+
+	}
+
+	@PostMapping("/user/edit/{id}")
+	public String editContractUser(@PathVariable("id") Long id, ContractDTO editContract, Model model) {
+		Buyer oldBuyer = buyerService.findBuyerByContractId(id);
+		Buyer newBuyer = editContract.getBuyer();
+		if ((oldBuyer != null && newBuyer.getId() != null) || !oldBuyer.equals(newBuyer)
+				|| !oldBuyer.getId().equals(newBuyer.getId())) {
+			Contract oldContract = contractService.findContractById(id);
+			oldBuyer.removeContract(oldContract);
+			buyerService.updateBuyer(id, oldBuyer);
+
+			newBuyer.addContract(editContract.getContract());
+			buyerService.updateBuyer(id, newBuyer);
+			contractService.deleteContractById(oldContract.getId());
+		} else {
+			contractService.updateContract(id, editContract.getContract());
+		}
+		model.addAttribute("contracts", contractService.findAllContracts());
+		return "redirect:/contracts/user";
+	}
+
 	@PostMapping("/delete/{id}")
 	public String deleteContract(@PathVariable("id") Long id, Model model) {
 		contractService.deleteContractById(id);
 		model.addAttribute("contracts", contractService.findAllContracts());
 		return "redirect:/contracts";
+	}
+
+	@PostMapping("/user/delete/{id}")
+	public String deleteContractUser(@PathVariable("id") Long id, Model model) {
+		contractService.deleteContractById(id);
+		model.addAttribute("contracts", contractService.findAllContracts());
+		return getAllContractsForUser(model);
 	}
 }

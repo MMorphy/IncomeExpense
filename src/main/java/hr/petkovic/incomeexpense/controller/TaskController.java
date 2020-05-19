@@ -53,6 +53,10 @@ public class TaskController {
 		this.userService = userService;
 	}
 
+	@GetMapping("/home")
+	public String getUnaprijedjenjeHome() {
+		return "tasks/unaprijedjenje";
+	}
 	@GetMapping()
 	public String getAllTasks(Model model) {
 		model.addAttribute("todayUnfinishedTasks", taskService.findAllTasksForToday(false));

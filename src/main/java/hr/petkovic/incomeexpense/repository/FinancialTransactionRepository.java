@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import hr.petkovic.incomeexpense.DTO.BankDTO;
 import hr.petkovic.incomeexpense.DTO.TimeAggDTO;
 import hr.petkovic.incomeexpense.entity.FinancialTransaction;
 
@@ -63,9 +64,6 @@ public interface FinancialTransactionRepository extends JpaRepository<FinancialT
 		+ "GROUP BY YEAR(ft.createDate), MONTH(ft.createDate)")
 	List<TimeAggDTO> findAllExpensesTransactionSumsByYearAndMonth();
 	
-	
-	
-	
 	@Query("SELECT "
 			+ "new hr.petkovic.incomeexpense.DTO.TimeAggDTO(YEAR(ft.createDate), SUM(amount)) "
 		+ "FROM "
@@ -83,4 +81,44 @@ public interface FinancialTransactionRepository extends JpaRepository<FinancialT
 			+ " ft.type.name='Expenses' "
 		+ "GROUP BY YEAR(ft.createDate)")
 	List<TimeAggDTO> findAllExpensesTransactionSumsByYear();
+
+	@Query("SELECT "
+			+ "new hr.petkovic.incomeexpense.DTO.TimeAggDTO(YEAR(ft.createDate), MONTH(ft.createDate), SUM(amount)) "
+		+ "FROM "
+			+ "FinancialTransaction ft "
+		+ "WHERE "
+			+ " ft.type.name='Income' "
+		+ "AND ft.createdBy.username=?1 "
+		+ "GROUP BY YEAR(ft.createDate), MONTH(ft.createDate)")
+	List<TimeAggDTO> findAllIncomeTransactionSumsByYearAndMonthForUser(String username);
+
+	@Query("SELECT "
+			+ "new hr.petkovic.incomeexpense.DTO.TimeAggDTO(YEAR(ft.createDate), MONTH(ft.createDate), SUM(amount)) "
+		+ "FROM "
+			+ "FinancialTransaction ft "
+		+ "WHERE "
+			+ " ft.type.name='Expenses' "
+		+ "AND ft.createdBy.username=?1 "
+		+ "GROUP BY YEAR(ft.createDate), MONTH(ft.createDate)")
+	List<TimeAggDTO> findAllExpensesTransactionSumsByYearAndMonthForUser(String username);
+	
+	@Query("SELECT "
+			+ "new hr.petkovic.incomeexpense.DTO.TimeAggDTO(YEAR(ft.createDate), SUM(amount)) "
+		+ "FROM "
+			+ "FinancialTransaction ft "
+		+ "WHERE "
+			+ " ft.type.name='Income' "
+		+ "AND ft.createdBy.username=?1 "
+		+ "GROUP BY YEAR(ft.createDate)")
+	List<TimeAggDTO> findAllIncomeTransactionSumsByYearForUser(String username);
+
+	@Query("SELECT "
+			+ "new hr.petkovic.incomeexpense.DTO.TimeAggDTO(YEAR(ft.createDate), SUM(amount)) "
+		+ "FROM "
+			+ "FinancialTransaction ft "
+		+ "WHERE "
+			+ " ft.type.name='Expenses' "
+		+ "AND ft.createdBy.username=?1 "
+		+ "GROUP BY YEAR(ft.createDate)")
+	List<TimeAggDTO> findAllExpensesTransactionSumsByYearForUser(String username);
 }

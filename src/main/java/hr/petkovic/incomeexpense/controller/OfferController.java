@@ -34,7 +34,7 @@ public class OfferController {
 	@GetMapping()
 	public String getAllOffers(Model model) {
 		model.addAttribute("offers", oService.findAllOffers());
-		return "offers/offers";
+		return "offers/offersAll";
 	}
 
 	@GetMapping("/user")
@@ -114,6 +114,22 @@ public class OfferController {
 	@PostMapping("/edit/{id}")
 	public String editOffer(@PathVariable("id") Long id, Offer editOffer) {
 		oService.updateOffer(id, editOffer);
+		return "offers/offersHome";
+	}
+
+	@GetMapping("/reject/{id}")
+	public String getOfferRejecting(@PathVariable("id") Long id, Model model) {
+		Offer o = oService.findOfferById(id);
+		model.addAttribute("editOffer", o);
+		model.addAttribute("buyers", buyerService.findAllBuyers());
+		return "offers/offersRejected";
+	}
+
+	@PostMapping("/reject/{id}")
+	public String rejectOffer(@PathVariable("id") Long id, Offer editOffer) {
+		Offer o = oService.findOfferById(id);
+		o.setDescription(editOffer.getDescription());
+		oService.saveOffer(o);
 		return "offers/offersHome";
 	}
 

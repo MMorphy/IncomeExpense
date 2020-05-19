@@ -28,10 +28,8 @@ public class Contract {
 
 	@Column(nullable = false)
 	private Float agreedAmount;
-//
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "currency_id")
-//	private Currency agreedCurrency;
+
+	private String username;
 
 	private Float currentAmount = new Float(0F);
 
@@ -75,6 +73,14 @@ public class Contract {
 
 	public void setAgreedAmount(Float agreedAmount) {
 		this.agreedAmount = agreedAmount;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public Float getCurrentAmount() {

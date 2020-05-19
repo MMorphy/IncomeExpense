@@ -37,6 +37,11 @@ public class AdministrationController {
 		this.rolesService = rolesService;
 	}
 
+	@GetMapping("/home")
+	public String home() {
+		return "administration/adminHome";
+	}
+
 	@GetMapping("/user")
 	public String getUserAdmin(Model model) {
 		model.addAttribute("users", userService.findAllEnabledUsers());

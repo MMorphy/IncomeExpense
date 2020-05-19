@@ -36,7 +36,6 @@ public class Buyer {
 	@OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Offer> offers;
 
-	// TODO Napravi da ide preko offer-a na contracte
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@JoinColumn(name = "buyer_id")

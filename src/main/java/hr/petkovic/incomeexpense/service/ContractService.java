@@ -31,12 +31,23 @@ public class ContractService {
 		}
 	}
 
+	public List<Contract> findAllUnpaid(String username) {
+		if (username == null) {
+			return contractRepo.findUnpaid();
+		} else
+			return contractRepo.findUnpaidForUser(username);
+	}
+
 	public List<Contract> findAllContractsForBuyerId(Long id) {
 		return (List<Contract>) buyerService.findBuyerById(id).getContracts();
 	}
 
 	public List<Contract> findAllContracts() {
 		return contractRepo.findAll();
+	}
+
+	public List<Contract> findAllContractsForUsername(String username) {
+		return contractRepo.findByUsername(username);
 	}
 
 	public Contract saveContract(Contract contr) {
